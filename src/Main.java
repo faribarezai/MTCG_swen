@@ -1,3 +1,9 @@
+package src;
+
+import src.mtcg.Card;
+import src.mtcg.EType;
+import src.mtcg.Player;
+
 import java.util.*;
 
 public class Main {
