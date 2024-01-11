@@ -1,7 +1,7 @@
-package src.httpserver.utils;
+package httpserver.utils;
 
-import src.httpserver.http.Method;
-import src.httpserver.server.Request;
+import httpserver.http.Method;
+import httpserver.server.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;

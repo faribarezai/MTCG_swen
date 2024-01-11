@@ -1,19 +1,30 @@
-package src.mtcg;
+package mtcg.model;
+
+import lombok.Getter;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class Player {
+    private int id;
+    @Getter
     private String username;
+    @Getter
     private String password;
     private List<Card> deck;
+    @Getter
     private List<Card>stack;
+    ///////Getter Methods-------------------------------------------
+    @Getter
     private int coins=20;
-    private Boolean win; // +3points else -5 for loss
+    private List<BattleLog> won; // +3points else -5 for loss
+    private List<BattleLog> lost;
     private int ELOvalue=100;
+    //return sorted List of scoreboared
+    @Getter
     List<Integer>scoreboard;
 
-    Player(String username, String password, List<Card>deck, List<Card>stack, int coins, List<Integer>sboard) {
+    public Player(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> sboard) {
         this.username=username;
         this.password=password;
         this.deck=deck;
@@ -70,26 +81,17 @@ public class Player {
     }
 
 
-    ///////Getter Methods-------------------------------------------
-    public int getCoins() {
-        return coins;
-    }
-
     public void setCoins(int coins) {
         this.coins = coins;
-    }
-
-    public Boolean getWin() {
-        return win;
     }
 
     public int getELO() {
         return ELOvalue;
     }
 
-    public List<Integer>getScoreboard() {
-        //return sorted List of scoreboared
-        return scoreboard;
+    public int getElo() {return ELOvalue;
+    }
 
+    public long getId() {return id;
     }
 }

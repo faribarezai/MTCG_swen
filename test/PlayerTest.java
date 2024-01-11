@@ -1,11 +1,15 @@
-package src.mtcg;
+package test;
 
+import mtcg.Card;
+import mtcg.Player;
 import org.junit.Before;
-        import org.junit.Test;
-        import java.util.ArrayList;
-        import java.util.List;
+import org.junit.Test;
 
-        import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlayerTest {
     private Player player;

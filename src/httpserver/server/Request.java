@@ -1,10 +1,12 @@
-package src.httpserver.server;
+package httpserver.server;
 
-import src.httpserver.http.Method;
+import httpserver.http.Method;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Request {
     private Method method;
     private String urlContent;
@@ -23,13 +25,9 @@ public class Request {
         return '/' + this.pathParts.get(0);
     }
 
-    public String getUrlContent(){
-        return this.urlContent;
-    }
-
     public void setUrlContent(String urlContent) {
         this.urlContent = urlContent;
-        Boolean hasParams = urlContent.indexOf("?") != -1;
+        Boolean hasParams = urlContent.contains("?");
 
         if (hasParams) {
             String[] pathParts =  urlContent.split("\\?");
@@ -43,16 +41,8 @@ public class Request {
         }
     }
 
-    public Method getMethod() {
-        return method;
-    }
-
     public void setMethod(Method method) {
         this.method = method;
-    }
-
-    public String getPathname() {
-        return pathname;
     }
 
 
@@ -63,39 +53,24 @@ public class Request {
         for (String part :stringParts)
         {
             if (part != null &&
-                    part.length() > 0)
+                    !part.isEmpty())
             {
                 this.pathParts.add(part);
             }
         }
 
     }
-    public String getParams() {
-        return params;
-    }
 
     public void setParams(String params) {
         this.params = params;
-    }
-
-    public HeaderMap getHeaderMap() {
-        return headerMap;
     }
 
     public void setHeaderMap(HeaderMap headerMap) {
         this.headerMap = headerMap;
     }
 
-    public String getBody() {
-        return body;
-    }
-
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public List<String> getPathParts() {
-        return pathParts;
     }
 
     public void setPathParts(List<String> pathParts) {

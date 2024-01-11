@@ -1,4 +1,4 @@
-package src.httpserver.http;
+package httpserver.http;
 
 public enum Method {
     GET,

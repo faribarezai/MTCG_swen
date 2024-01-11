@@ -1,4 +1,4 @@
-package src.mtcg;
+package mtcg.model;
 
 public enum Specialty {
     GOBLIN,

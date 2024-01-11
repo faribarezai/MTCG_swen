@@ -1,13 +1,18 @@
-package src.httpserver.utils;
+package httpserver.utils;
 
-import src.httpserver.server.Service;
+import httpserver.server.Service;
+import mtcg.service.PlayerService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
-    private Map<String, Service> serviceRegistry = new HashMap<>();
+    private Map<String, Service> serviceRegistry;
 
+    public Router() {
+        serviceRegistry= new HashMap<>();
+        serviceRegistry.put("/user", new PlayerService());
+    }
     public void addService(String route, Service service)
     {
         this.serviceRegistry.put(route, service);

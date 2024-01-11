@@ -1,4 +1,4 @@
-package src.mtcg.dal;
+package mtcg.dal;
 
 public class DataAccessException extends RuntimeException{
     public DataAccessException(String message) {

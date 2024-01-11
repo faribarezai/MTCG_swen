@@ -1,4 +1,4 @@
-package src.httpserver.server;
+package httpserver.server;
 
 public interface Service {
     Response handleRequest(Request request);

@@ -1,7 +1,7 @@
-package src.httpserver.server;
+package httpserver.server;
 
-import src.httpserver.utils.RequestHandler;
-import src.httpserver.utils.Router;
+import httpserver.utils.RequestHandler;
+import httpserver.utils.Router;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,18 +10,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-    private int port;
-    private Router router;
+
+    private final int port;
+    private final Router router;
 
     public Server(int port, Router router) {
         this.port = port;
         this.router = router;
     }
 
+    public Server(){
+        this(8080, new Router());
+    }
+
     public void start() throws IOException {
         final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-        System.out.println("Start http-server...");
+       System.out.println("Start http-server...");
         System.out.println("http-server running at: http://localhost:" + this.port);
 
         try(ServerSocket serverSocket = new ServerSocket(this.port)) {
