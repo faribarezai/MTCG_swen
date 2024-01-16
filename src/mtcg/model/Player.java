@@ -22,7 +22,7 @@ public class Player {
     private int ELOvalue=100;
     //return sorted List of scoreboared
     @Getter
-    List<Integer>scoreboard;
+    List<Integer>scoreboard; // vlt im PlayerService implementieren, weil dort die business logic stattfindet
 
     public Player(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> sboard) {
         this.username=username;

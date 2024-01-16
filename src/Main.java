@@ -3,14 +3,12 @@ import mtcg.dal.DatabaseManager;
 import mtcg.service.CardService;
 import mtcg.service.PlayerService;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Lets play.... Monster Trading Card Game!");
 
-        Scanner scanner = new Scanner(System.in);
+       /* Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter your Name: ");
         String inputName = scanner.next();
@@ -18,6 +16,7 @@ public class Main {
         System.out.println("Please enter your Password: ");
         String inputPassword = scanner.next();
 
+        */
 
         try {
             // Initialize the HTTP server
@@ -40,6 +39,25 @@ public class Main {
 
 
 
+/*
+    public static void main(String[] args) {
+        // Initialize the router
+        Router router = new Router();
+
+        // Initialize the server
+        Server server = new Server(8080, router);
+
+        // You can add more services/routes dynamically if needed
+        // router.addService("/newRoute", new SomeService());
+
+        try {
+            // Start the server
+            server.start();
+        } catch (IOException e) {
+            System.err.println("Error starting the server: " + e.getMessage());
+        }
+    }
+*/
 
 
 

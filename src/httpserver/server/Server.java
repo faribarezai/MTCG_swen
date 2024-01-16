@@ -20,7 +20,7 @@ public class Server {
     }
 
     public Server(){
-        this(8080, new Router());
+        this(10001, new Router());
     }
 
     public void start() throws IOException {

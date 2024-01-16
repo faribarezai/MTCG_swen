@@ -76,5 +76,13 @@ public class Request {
     public void setPathParts(List<String> pathParts) {
         this.pathParts = pathParts;
     }
+
+    public String getAuthorizationToken() {
+        String authorizationHeader = headerMap.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Extracting token from "Bearer TOKEN"
+        }
+        return null;
+    }
 }
 
