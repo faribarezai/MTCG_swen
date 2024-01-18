@@ -95,7 +95,7 @@ UPDATE player SET ELOvalue=120 WHERE username = 'testuser2';
 
 SELECT * FROM player;
 
-TRUNCATE card CASCADE;
-DELETE FROM card;
-TRUNCATE player CASCADE;
-DELETE FROM player;
+--TRUNCATE card CASCADE;
+--DELETE FROM card;
+--TRUNCATE player CASCADE;
+--DELETE FROM player;

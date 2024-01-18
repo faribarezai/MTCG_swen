@@ -1,6 +1,7 @@
 package httpserver.utils;
 
 import httpserver.server.Service;
+import mtcg.service.CardService;
 import mtcg.service.PackageService;
 import mtcg.service.PlayerService;
 
@@ -18,14 +19,18 @@ public class Router {
 
     private void initializeRoute() {
         //User Service
-        serviceRegistry.put("/users", new PlayerService());
+        serviceRegistry.put("/users", new PlayerService()); // controller oder service?
         serviceRegistry.put("/sessions", new PlayerService());
         serviceRegistry.put("/users/{username}", new PlayerService());
 
+        //CardService
+        serviceRegistry.put("/cards", new CardService());
+        serviceRegistry.put("/deck", new CardService());
+        serviceRegistry.put("/trading", new CardService());
+        serviceRegistry.put("/tradings/{ttid}",new CardService());
+        //PackageService
         serviceRegistry.put("/packages", new PackageService());
         serviceRegistry.put("/transactions/packages", new PackageService());
-        serviceRegistry.put("/users", new PlayerService());
-
 
     }
 

@@ -1,22 +1,21 @@
 import httpserver.server.Server;
 import mtcg.dal.DatabaseManager;
-import mtcg.service.CardService;
 import mtcg.service.PlayerService;
 
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Lets play.... Monster Trading Card Game!");
-
-       /* Scanner scanner = new Scanner(System.in);
+/*
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter your Name: ");
         String inputName = scanner.next();
 
         System.out.println("Please enter your Password: ");
         String inputPassword = scanner.next();
+*/
 
-        */
 
         try {
             // Initialize the HTTP server
@@ -25,7 +24,7 @@ public class Main {
 
             // Initialize other components
             PlayerService playerService = new PlayerService(DatabaseManager.INSTANCE.getConnection());
-            CardService cardService = new CardService(/* pass dependencies if needed */);
+            //CardService cardService = new CardService(/* pass dependencies if needed */);
             // ... other components
 
             // Your application is now running

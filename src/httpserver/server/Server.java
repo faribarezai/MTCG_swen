@@ -20,7 +20,7 @@ public class Server {
     }
 
     public Server(){
-        this(10001, new Router());
+        this(5000, new Router());
     }
 
     public void start() throws IOException {
@@ -37,4 +37,5 @@ public class Server {
             }
         }
     }
+
 }

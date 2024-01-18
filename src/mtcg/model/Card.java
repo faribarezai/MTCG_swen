@@ -9,17 +9,19 @@ public class Card{
     private Player player;
     private int damage;
     private ElementType element;
+    @Getter
     private CardType cardType;
 
 
-    public Card(String name, int damage, ElementType elem) {
+    public Card(String name,CardType ct, int damage, ElementType elem) {
         this.name=name;
         this.damage=damage;
         this.element=elem;
+        this.cardType=ct;
 
     }
 
-    public ElementType getElementType() { return element;
-    }
+    public ElementType getElementType() { return element;}
+
 
 }

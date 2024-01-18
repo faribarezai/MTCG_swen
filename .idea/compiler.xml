@@ -10,8 +10,11 @@
         <module name="MTCG_swen" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="httpserver" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="MTCG_swen" options="--add-exports java.base/jdk.internal.classfile.impl=ALL-UNNAMED" />
+    </option>
   </component>
 </project>
