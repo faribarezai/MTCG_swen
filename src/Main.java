@@ -1,10 +1,12 @@
-import java.util.*;
+import httpserver.server.Server;
+import mtcg.dal.DatabaseManager;
+import mtcg.service.PlayerService;
 
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Lets play.... Monster Trading Card Game!");
-
+/*
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter your Name: ");
@@ -12,13 +14,63 @@ public class Main {
 
         System.out.println("Please enter your Password: ");
         String inputPassword = scanner.next();
+*/
 
 
-        Card firespell = new Card("FireSpell", 10, EType.FIRE);
-        Card waterspell = new Card("WaterSpell", 20, EType.WATER);
-        Card watergoblin = new Card("WaterGoblin", 10, EType.WATER);
-        Card firetroll = new Card("FireTroll", 10, EType.FIRE);
-        Card knight = new Card("Knight", 15, EType.NORMAL);
+        try {
+            // Initialize the HTTP server
+            Server server = new Server();
+            server.start();
+
+            // Initialize other components
+            PlayerService playerService = new PlayerService(DatabaseManager.INSTANCE.getConnection());
+            //CardService cardService = new CardService(/* pass dependencies if needed */);
+            // ... other components
+
+            // Your application is now running
+
+        } catch (Exception e) {
+            // Handle initialization failures
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+/*
+    public static void main(String[] args) {
+        // Initialize the router
+        Router router = new Router();
+
+        // Initialize the server
+        Server server = new Server(8080, router);
+
+        // You can add more services/routes dynamically if needed
+        // router.addService("/newRoute", new SomeService());
+
+        try {
+            // Start the server
+            server.start();
+        } catch (IOException e) {
+            System.err.println("Error starting the server: " + e.getMessage());
+        }
+    }
+*/
+
+
+
+
+
+
+
+/*
+
+        Card firespell = new Card("FireSpell", 10, ElementType.FIRE);
+        Card waterspell = new Card("WaterSpell", 20, ElementType.WATER);
+        Card watergoblin = new Card("WaterGoblin", 10, ElementType.WATER);
+        Card firetroll = new Card("FireTroll", 10, ElementType.FIRE);
+        Card knight = new Card("Knight", 15, ElementType.NORMAL);
 
         List<Card> peterStack = new ArrayList<>();
         peterStack.add(firespell);
@@ -27,8 +79,8 @@ public class Main {
         peterStack.add(firetroll);
         peterStack.add(watergoblin);
         peterStack.add(knight);
-
-        List<Card> peterDeck = new ArrayList<>();
+*/
+  /*      List<Card> peterDeck = new ArrayList<>();
 
 
 
@@ -55,9 +107,9 @@ public class Main {
 
 
         System.out.println("--------sortierter Scoreboard-----");
-        peter.scoreboard.add(12);
-        peter.scoreboard.add(45);
-        peter.scoreboard.add(-1);
+        peter.getScoreboard().add(12);
+        peter.getScoreboard().add(45);
+        peter.getScoreboard().add(-1);
         peterSc= peter.sortScoreBoard();
         for (Integer in : peterSc)
             System.out.print(in + ", ");
@@ -66,5 +118,4 @@ public class Main {
 
 
     }
-
-}
+    */
