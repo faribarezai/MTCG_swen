@@ -6,7 +6,7 @@ import lombok.Getter;
 public class Card{
     private String name;
     private int id;
-    private Player player;
+    private User user;
     private int damage;
     private ElementType element;
     @Getter

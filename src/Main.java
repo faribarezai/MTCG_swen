@@ -1,6 +1,7 @@
 import httpserver.server.Server;
 import mtcg.dal.DatabaseManager;
-import mtcg.service.PlayerService;
+import mtcg.service.UserService;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -23,7 +24,7 @@ public class Main {
             server.start();
 
             // Initialize other components
-            PlayerService playerService = new PlayerService(DatabaseManager.INSTANCE.getConnection());
+            UserService userService = new UserService(DatabaseManager.INSTANCE.getConnection());
             //CardService cardService = new CardService(/* pass dependencies if needed */);
             // ... other components
 

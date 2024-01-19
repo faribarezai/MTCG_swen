@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.List;
 
-public class Player {
+public class User {
     private int id;
     @Getter
     private String username;
@@ -22,7 +22,7 @@ public class Player {
     private int ELOvalue=100;
     @Getter
     List<Integer>scoreboard;
-    public Player(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> scoreboard) {
+    public User(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> scoreboard) {
         this.username=username;
         this.password=password;
         this.deck=deck;
@@ -32,7 +32,7 @@ public class Player {
 
     }
 
-    public Player() {}
+    public User() {}
 
     public void setCoins(int coins) {
         this.coins = coins;

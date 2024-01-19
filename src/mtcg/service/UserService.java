@@ -8,8 +8,8 @@ import httpserver.server.Response;
 import httpserver.server.Service;
 import mtcg.dal.UnitOfWork;
 import mtcg.model.Card;
-import mtcg.model.Player;
-import mtcg.repository.PlayerRepository;
+import mtcg.model.User;
+import mtcg.repository.UserRepository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,11 +19,11 @@ import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
-public class PlayerService implements Service {
-    private Player player;
-    public PlayerService(Connection connection) {
+public class UserService implements Service {
+    private User user;
+    public UserService(Connection connection) {
     }
-    public PlayerService() {}
+    public UserService() {}
 
 
     public List<Card> selectDeckCards(List<Card> card) {
@@ -33,19 +33,19 @@ public class PlayerService implements Service {
 
         // Add the top 4 cards with the highest damage to the deck
         for (int i = 0; i < Math.min(card.size(), 4); i++) {
-            player.getDeck().add(card.get(i));
+            user.getDeck().add(card.get(i));
         }
-        return player.getDeck();
+        return user.getDeck();
     }
 
     public void requestBattle() {
         // request to server with current deck
     }
 
-    public void compareStats(Player opponent) {
+    public void compareStats(User opponent) {
         // comparing stats of yours and opponent
         System.out.println("Comparing stats: ");
-        System.out.println(this.player.getUsername() + ": " + this.player.getElo() + "Elo, ");
+        System.out.println(this.user.getUsername() + ": " + this.user.getElo() + "Elo, ");
         System.out.println(opponent.getUsername() + ": " + opponent.getElo()+ "Elo, ");
 
         //opponent.getScoreboard();
@@ -53,16 +53,16 @@ public class PlayerService implements Service {
 
     //return sorted List
     public List<Integer>sortScoreBoard() {
-        return player.getScoreboard().stream().sorted().toList();
+        return user.getScoreboard().stream().sorted().toList();
     }
 
 
 
 
-    public void updatePlayer(Player player) {
+    public void updateUser(User user) {
         try (UnitOfWork unitOfWork = new UnitOfWork()) {
-            PlayerRepository playerRepository = new PlayerRepository(unitOfWork);
-            playerRepository.updatePlayer(player);
+            UserRepository userRepository = new UserRepository(unitOfWork);
+            userRepository.updatePlayer(user);
             unitOfWork.commitTransaction();
         } catch (Exception e) {
             // Handle exceptions
@@ -101,19 +101,19 @@ public class PlayerService implements Service {
            // Player player = objectMapper.readValue(requestBody, Player.class);
 
             // Validate the request body
-            if (player == null || player.getUsername() == null || player.getPassword() == null
-                    || player.getUsername().isEmpty() || player.getPassword().isEmpty()) {
+            if (user == null || user.getUsername() == null || user.getPassword() == null
+                    || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
                 return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body");
             }
 
 
             // Check if the user already exists
-            if (userExists(player.getUsername())) {
+            if (userExists(user.getUsername())) {
                 return new Response(HttpStatus.CONFLICT, ContentType.PLAIN_TEXT, "User already exists");
             }
 
             // save user to database
-            saveUserToDatabase(player);
+            saveUserToDatabase(user);
 
             // Return a success response
             return new Response(HttpStatus.CREATED, ContentType.PLAIN_TEXT, "User registered successfully");
@@ -143,13 +143,13 @@ public class PlayerService implements Service {
             return false;
     }
 
-    private void saveUserToDatabase(Player player) {
+    private void saveUserToDatabase(User user) {
 
         //JDBC to execute an INSERT statement
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mtcg", "postgres", "password");
              PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Player (username, password) VALUES (?, ?)")) {
-            preparedStatement.setString(1, player.getUsername());
-            preparedStatement.setString(2, player.getPassword());
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately

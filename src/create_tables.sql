@@ -1,6 +1,6 @@
 
 --DROP TABLES-----------------------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS player CASCADE;
+DROP TABLE IF EXISTS user CASCADE;
 DROP TABLE IF EXISTS package CASCADE;
 DROP TABLE IF EXISTS card CASCADE;
 DROP TABLE IF EXISTS cardType CASCADE;
@@ -16,8 +16,8 @@ CREATE TYPE elementtype AS ENUM ('FIRE', 'WATER', 'NORMAL');
 CREATE TYPE specialty AS ENUM ('GOBLIN', 'DRAGON', 'WIZZARD', 'ORK', 'KNIGHT', 'WATERSPELL', 'FIREELVE', 'KRAKE');
 
 
--- Player Table
-CREATE TABLE IF NOT EXISTS player (
+-- User Table
+CREATE TABLE IF NOT EXISTS user (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS player (
     ELOvalue INT DEFAULT 100
     );
 
-ALTER TABLE player
+ALTER TABLE user
     owner TO postgres;
 
 -- Card Table
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS battleLog (
     winner_id INT,
     loser_id INT,
     roundlogs_id INT,
-    FOREIGN KEY (winner_id) REFERENCES player (id),
-    FOREIGN KEY (loser_id) REFERENCES player (id),
+    FOREIGN KEY (winner_id) REFERENCES user (id),
+    FOREIGN KEY (loser_id) REFERENCES user (id),
     FOREIGN KEY (roundlogs_id) REFERENCES roundLog (id)
     );
 
@@ -80,22 +80,22 @@ ALTER TABLE roundLog
 
 
 --INSERTS---------------------------------------------------------------------------------------------------------
-INSERT INTO player (username, password) VALUES ('admin', 'admin_password');
-INSERT INTO player (username, password) VALUES ('user', 'user_password');
+INSERT INTO user (username, password) VALUES ('admin', 'admin_password');
+INSERT INTO user (username, password) VALUES ('user', 'user_password');
 
-INSERT INTO player (username, password) VALUES ('admin', 'admin_password');
-INSERT INTO player (username, password) VALUES ('user', 'user_password');
+INSERT INTO user (username, password) VALUES ('admin', 'admin_password');
+INSERT INTO user (username, password) VALUES ('user', 'user_password');
 
-INSERT INTO player (username, password) VALUES ('testuser1', 'password1');
-INSERT INTO player (username, password) VALUES ('testuser2', 'password2');
+INSERT INTO user (username, password) VALUES ('testuser1', 'password1');
+INSERT INTO user (username, password) VALUES ('testuser2', 'password2');
 
-UPDATE player SET coins = (coins -5) WHERE username = 'testuser1';
-UPDATE player SET ELOvalue=80 WHERE username = 'testuser1';
-UPDATE player SET ELOvalue=120 WHERE username = 'testuser2';
+UPDATE user SET coins = (coins -5) WHERE username = 'testuser1';
+UPDATE user SET ELOvalue=80 WHERE username = 'testuser1';
+UPDATE user SET ELOvalue=120 WHERE username = 'testuser2';
 
-SELECT * FROM player;
+SELECT * FROM user;
 
 --TRUNCATE card CASCADE;
 --DELETE FROM card;
---TRUNCATE player CASCADE;
---DELETE FROM player;
+--TRUNCATE user CASCADE;
+--DELETE FROM user;

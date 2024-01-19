@@ -1,28 +1,28 @@
 package mtcg.repository;
 
-import mtcg.model.Player;
+import mtcg.model.User;
 import mtcg.dal.DataAccessException;
 import mtcg.dal.UnitOfWork;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class PlayerRepository {
+public class UserRepository {
 
     private final UnitOfWork unitOfWork;
 
-    public PlayerRepository(UnitOfWork unitOfWork) {
+    public UserRepository(UnitOfWork unitOfWork) {
         this.unitOfWork = unitOfWork;
     }
 
-    public void updatePlayer(Player player) {
+    public void updatePlayer(User user) {
         String sql = "UPDATE players SET username = ?, password = ?, elo = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            preparedStatement.setString(1, player.getUsername());
-            preparedStatement.setString(2, player.getPassword());
-            preparedStatement.setInt(3, player.getElo());
-            preparedStatement.setLong(4, player.getId());
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setInt(3, user.getElo());
+            preparedStatement.setLong(4, user.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

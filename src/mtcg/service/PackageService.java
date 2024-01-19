@@ -6,7 +6,7 @@ import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
 import mtcg.model.Card;
-import mtcg.model.Player;
+import mtcg.model.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,14 +15,14 @@ public class PackageService implements Service {
     private static final int CARDS_PER_PACKAGE = 5;
     private static final int COINS_PER_PACKAGE = 5;
 
-    public static Response buyPackage(Player player) {
+    public static Response buyPackage(User user) {
         // Check if the user has enough coins to buy a package
-        if (player.getCoins() < COINS_PER_PACKAGE) {
+        if (user.getCoins() < COINS_PER_PACKAGE) {
             return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Not enough coins to buy a package");
         }
 
         // Deduct coins from the user's account
-        player.deductCoins(COINS_PER_PACKAGE);
+        user.deductCoins(COINS_PER_PACKAGE);
 
         // Generate and return a package with 5 cards
         List<Card> cards = generateCards();

@@ -3,7 +3,7 @@ package httpserver.utils;
 import httpserver.server.Service;
 import mtcg.service.CardService;
 import mtcg.service.PackageService;
-import mtcg.service.PlayerService;
+import mtcg.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +19,9 @@ public class Router {
 
     private void initializeRoute() {
         //User Service
-        serviceRegistry.put("/users", new PlayerService()); // controller oder service?
-        serviceRegistry.put("/sessions", new PlayerService());
-        serviceRegistry.put("/users/{username}", new PlayerService());
+        serviceRegistry.put("/users", new UserService()); // controller oder service?
+        serviceRegistry.put("/sessions", new UserService());
+        serviceRegistry.put("/users/{username}", new UserService());
 
         //CardService
         serviceRegistry.put("/cards", new CardService());

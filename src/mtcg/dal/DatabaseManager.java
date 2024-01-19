@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public enum DatabaseManager {
     INSTANCE;
 
-    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/mtcg";
+    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432";
     private static final String USER = "postgres";
     private static final String PASSWORD = "password";
 
