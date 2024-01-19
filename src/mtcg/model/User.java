@@ -17,8 +17,6 @@ public class User {
     ///////Getter Methods-------------------------------------------
     @Getter
     private int coins=20;
-    private List<BattleLog> won; // +3points else -5 for loss
-    private List<BattleLog> lost;
     private int ELOvalue=100;
     @Getter
     List<Integer>scoreboard;
