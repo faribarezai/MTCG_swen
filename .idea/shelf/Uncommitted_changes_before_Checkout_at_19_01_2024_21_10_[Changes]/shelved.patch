@@ -1,0 +1,57 @@
+Index: src/httpserver/utils/Router.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package httpserver.utils;\r\n\r\nimport httpserver.server.Service;\r\nimport mtcg.service.CardService;\r\nimport mtcg.service.PackageService;\r\nimport mtcg.service.PlayerService;\r\n\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\npublic class Router {\r\n    private Map<String, Service> serviceRegistry;\r\n\r\n    public Router() {\r\n        serviceRegistry = new HashMap<>();\r\n        initializeRoute();\r\n    }\r\n\r\n\r\n    private void initializeRoute() {\r\n        //User Service\r\n        serviceRegistry.put(\"/users\", new PlayerService()); // controller oder service?\r\n        serviceRegistry.put(\"/sessions\", new PlayerService());\r\n        serviceRegistry.put(\"/users/{username}\", new PlayerService());\r\n\r\n        //CardService\r\n        serviceRegistry.put(\"/cards\", new CardService());\r\n        serviceRegistry.put(\"/deck\", new CardService());\r\n        serviceRegistry.put(\"/trading\", new CardService());\r\n        serviceRegistry.put(\"/tradings/{ttid}\",new CardService());\r\n        //PackageService\r\n        serviceRegistry.put(\"/packages\", new PackageService());\r\n        serviceRegistry.put(\"/transactions/packages\", new PackageService());\r\n\r\n    }\r\n\r\n    public void addService(String route, Service service) {\r\n        this.serviceRegistry.put(route, service);\r\n    }\r\n\r\n    public void removeService(String route) {\r\n        this.serviceRegistry.remove(route);\r\n    }\r\n\r\n    public Service resolve(String route) {\r\n\r\n        for (Map.Entry<String, Service> serviceEntry : serviceRegistry.entrySet()) {\r\n            String registeredRoute = serviceEntry.getKey();\r\n            Service service = serviceEntry.getValue();\r\n            if (matchesRoute(route, registeredRoute)) {\r\n                return service;\r\n            }\r\n\r\n        }\r\n        return null;\r\n        //return this.serviceRegistry.get(route);\r\n    }\r\n\r\n    private boolean matchesRoute(String inputRoute, String registeredRoute) {\r\n        String[] inputParts = inputRoute.split(\"/\");\r\n        String[] registeredParts = registeredRoute.split(\"/\");\r\n\r\n        if (inputRoute.length() != registeredParts.length) {\r\n            return false;\r\n        }\r\n        for (int i = 0; i < inputParts.length; i++) {\r\n            if (registeredParts[i].startsWith(\"{\") && registeredParts[i].endsWith(\"}\")) {\r\n                continue;\r\n            }\r\n            if (!inputParts[i].equals(registeredParts[i])) {\r\n                return false;\r\n            }\r\n        }\r\n        return true;\r\n    }\r\n\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+===================================================================
+diff --git a/src/httpserver/utils/Router.java b/src/httpserver/utils/Router.java
+--- a/src/httpserver/utils/Router.java	
++++ b/src/httpserver/utils/Router.java	
+@@ -9,7 +9,7 @@
+ import java.util.Map;
+ 
+ public class Router {
+-    private Map<String, Service> serviceRegistry;
++    private final Map<String, Service> serviceRegistry;
+ 
+     public Router() {
+         serviceRegistry = new HashMap<>();
+@@ -74,20 +74,4 @@
+         return true;
+     }
+ 
+-}
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
++}
+\ No newline at end of file
+Index: src/httpserver/server/Server.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package httpserver.server;\r\n\r\nimport httpserver.utils.RequestHandler;\r\nimport httpserver.utils.Router;\r\n\r\nimport java.io.IOException;\r\nimport java.net.ServerSocket;\r\nimport java.net.Socket;\r\nimport java.util.concurrent.ExecutorService;\r\nimport java.util.concurrent.Executors;\r\n\r\npublic class Server {\r\n\r\n    private final int port;\r\n    private final Router router;\r\n\r\n    public Server(int port, Router router) {\r\n        this.port = port;\r\n        this.router = router;\r\n    }\r\n\r\n    public Server(){\r\n        this(5000, new Router());\r\n    }\r\n\r\n    public void start() throws IOException {\r\n        final ExecutorService executorService = Executors.newFixedThreadPool(10);\r\n\r\n       System.out.println(\"Start http-server...\");\r\n        System.out.println(\"http-server running at: http://localhost:\" + this.port);\r\n\r\n        try(ServerSocket serverSocket = new ServerSocket(this.port)) {\r\n            while(true) {\r\n                final Socket clientConnection = serverSocket.accept();\r\n                final RequestHandler socketHandler = new RequestHandler(clientConnection, this.router);\r\n                executorService.submit(socketHandler);\r\n            }\r\n        }\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/httpserver/server/Server.java b/src/httpserver/server/Server.java
+--- a/src/httpserver/server/Server.java	
++++ b/src/httpserver/server/Server.java	
+@@ -20,7 +20,7 @@
+     }
+ 
+     public Server(){
+-        this(5000, new Router());
++        this(10001, new Router());
+     }
+ 
+     public void start() throws IOException {

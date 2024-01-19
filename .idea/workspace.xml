@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="862d51ec-f3b0-4980-bc8a-d033b59e520e" name="Changes" comment="sql file" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="module-info" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="developer" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;faribarezai&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b865766a-7b1a-44b6-9f95-2665375ff726" />
+        <option name="url" value="https://github.com/faribarezai/MTCG_swen.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2aSl62bgWNZWjgoeuawmeFhIyI1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Notification.DisplayName-DoNotAsk-WindowsDefender": "Microsoft Defender configuration",
+    "Notification.DoNotAsk-WindowsDefender": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/User/Desktop/FH_3.Semester/SWEN1/MTCG_Project/MTCG_swen",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3816092",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="mtcg" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Desktop\FH_3.Semester\SWEN1\MTCG_Project\MTCG_swen\target" />
+      <recent name="C:\Users\User\Desktop\FH_3.Semester\SWEN1\MTCG_Project\MTCG_swen\src" />
+      <recent name="C:\Users\User\Desktop\FH_3.Semester\SWEN1\MTCG_Project\MTCG_swen\test" />
+      <recent name="C:\Users\User\Desktop\FH_3.Semester\SWEN1\MTCG_Project\MTCG_swen\src\main\httpserver\mtcg" />
+      <recent name="C:\Users\User\Desktop\FH_3.Semester\SWEN1\MTCG_Project\MTCG_swen\src\main" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="mtcg" />
+      <recent name="" />
+      <recent name="src" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="?" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="MTCG_swen" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="862d51ec-f3b0-4980-bc8a-d033b59e520e" name="Changes" comment="" />
+      <created>1704319682439</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704319682439</updated>
+      <workItem from="1704319685130" duration="2316000" />
+      <workItem from="1704464436653" duration="4109000" />
+      <workItem from="1704476122508" duration="7631000" />
+      <workItem from="1704652352911" duration="11350000" />
+      <workItem from="1704998400076" duration="12659000" />
+      <workItem from="1705350331161" duration="11977000" />
+      <workItem from="1705426193834" duration="6593000" />
+      <workItem from="1705530941854" duration="9377000" />
+      <workItem from="1705595373102" duration="3513000" />
+      <workItem from="1705602442574" duration="8902000" />
+      <workItem from="1705674513434" duration="5021000" />
+    </task>
+    <task id="LOCAL-00001" summary="add Junit for tesfile to work properly">
+      <option name="closed" value="true" />
+      <created>1704321256245</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704321256245</updated>
+    </task>
+    <task id="LOCAL-00002" summary="files structured &amp; added">
+      <option name="closed" value="true" />
+      <created>1704490206809</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1704490206809</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added db &amp; http classes">
+      <option name="closed" value="true" />
+      <created>1705017309281</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705017309282</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added db &amp; http classes">
+      <option name="closed" value="true" />
+      <created>1705017516353</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705017516353</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated some classes">
+      <option name="closed" value="true" />
+      <created>1705365810949</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705365810949</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added sql file">
+      <option name="closed" value="true" />
+      <created>1705531178693</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1705531178694</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added sql &amp; curl file +improved packageservice">
+      <option name="closed" value="true" />
+      <created>1705543281504</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705543281504</updated>
+    </task>
+    <task id="LOCAL-00008" summary="finally update some classes">
+      <option name="closed" value="true" />
+      <created>1705621249593</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705621249594</updated>
+    </task>
+    <task id="LOCAL-00009" summary="sql file">
+      <option name="closed" value="true" />
+      <created>1705621317665</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1705621317665</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add Junit for tesfile to work properly" />
+    <MESSAGE value="files structured &amp; added" />
+    <MESSAGE value="added db &amp; http classes" />
+    <MESSAGE value="updated some classes" />
+    <MESSAGE value="added sql file" />
+    <MESSAGE value="added sql &amp; curl file" />
+    <MESSAGE value="added sql &amp; curl file +improved packageservice" />
+    <MESSAGE value="finally update some classes" />
+    <MESSAGE value="sql file" />
+    <option name="LAST_COMMIT_MESSAGE" value="sql file" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

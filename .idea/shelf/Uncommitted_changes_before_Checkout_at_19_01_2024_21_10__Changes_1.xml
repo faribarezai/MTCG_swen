@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_19_01_2024_21_10_[Changes]1" date="1705695080451" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2024_21_10_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 19.01.2024 21:10 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/httpserver/server/Server.class" />
+    <option name="AFTER_PATH" value="target/classes/httpserver/server/Server.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2024_21_10_[Changes]1/Server.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/httpserver/utils/Router.class" />
+    <option name="AFTER_PATH" value="target/classes/httpserver/utils/Router.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2024_21_10_[Changes]1/Router.class" />
+  </binary>
+</changelist>
