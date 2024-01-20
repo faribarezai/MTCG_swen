@@ -16,7 +16,7 @@ public class UserRepository {
     }
 
     public void updatePlayer(User user) {
-        String sql = "UPDATE players SET username = ?, password = ?, elo = ? WHERE id = ?";
+        String sql = "UPDATE mUser SET Username = ?, Password = ?, elo = ? WHERE userId = ?";
 
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getUsername());
@@ -26,7 +26,7 @@ public class UserRepository {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccessException("Error updating player", e);
+            throw new DataAccessException("Error updating user", e);
         }
     }
 

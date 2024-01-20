@@ -7,25 +7,16 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Lets play.... Monster Trading Card Game!");
-/*
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please enter your Name: ");
-        String inputName = scanner.next();
-
-        System.out.println("Please enter your Password: ");
-        String inputPassword = scanner.next();
-*/
-
 
         try {
-            // Initialize the HTTP server
+            // start server
             Server server = new Server();
             server.start();
 
-            // Initialize other components
-            UserService userService = new UserService(DatabaseManager.INSTANCE.getConnection());
-            //CardService cardService = new CardService(/* pass dependencies if needed */);
+             // create users
+            UserService userService = new UserService();
+           // UserService myuserService = new UserService(DatabaseManager.INSTANCE.getConnection());
+            //CardService = new CardService(/* pass dependencies if needed */);
             // ... other components
 
             // Your application is now running

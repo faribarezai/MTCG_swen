@@ -59,7 +59,6 @@ public class PackageService implements Service {
     private static List<Card> retrieveCardsFromDatabase() {
         // Implement the logic to retrieve cards from the database based on their IDs
         // Example: return cardRepository.findByIdIn(cardIds);
-        // This is a placeholder; you need to implement the actual logic.
         return Collections.emptyList();
     }
 

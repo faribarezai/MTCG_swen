@@ -7,50 +7,56 @@ import java.util.List;
 public class User {
     private int id;
     @Getter
-    private String username;
+    private String Username;
     @Getter
-    private String password;
+    private String Password;
     @Getter
     private List<Card> deck;
     @Getter
-    private List<Card>stack;
+    private List<Card> stack;
     ///////Getter Methods-------------------------------------------
     @Getter
-    private int coins=20;
-    private int ELOvalue=100;
+    private int coins = 20;
+    private int ELOvalue = 100;
     @Getter
-    List<Integer>scoreboard;
+    List<Integer> scoreboard;// shall be in battlelogic
+
     public User(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> scoreboard) {
-        this.username=username;
-        this.password=password;
-        this.deck=deck;
-        this.coins=coins;
-        this.stack= stack;
-        this.scoreboard =scoreboard;
+        this.Username = username;
+        this.Password = password;
+        this.deck = deck;
+        this.coins = coins;
+        this.stack = stack;
+        this.scoreboard = scoreboard;
 
     }
 
-    public User() {}
+    public User() {
+    }
 
     public void setCoins(int coins) {
         this.coins = coins;
     }
 
-    public int getElo() {return ELOvalue;}
+    public int getElo() {
+        return ELOvalue;
+    }
 
-    public long getId() {return id;}
+    public long getId() {
+        return id;
+    }
 
     public void deductCoins(int coinsPerPackage) {
-        this.coins= getCoins()-coinsPerPackage;
+        this.coins = getCoins() - coinsPerPackage;
     }
 
     public int setElo(int i) {
-        return ELOvalue= i;
+        return ELOvalue = i;
     }
-
+}
 
     /*
-    // logic already implemented in PlayerService
+    // logic already implemented in UserService
     //select 4 Cards for Battle
     public List<Card> selectDeckCards(List<Card> card) {
         // put in deck 4 Cards (only the best ones)
@@ -85,7 +91,7 @@ public class User {
         scoreboard= getScoreboard();
         return scoreboard.stream().sorted().toList();
     }
+    }
 
 */
 
-}
