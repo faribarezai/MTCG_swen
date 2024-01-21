@@ -40,10 +40,14 @@ public class UserController {
             }
 
             // Check if the user already exists
-            if (userService.userExists(user.getUsername())) {
+            if (userService.userExists(user)) {
                 return new Response(HttpStatus.CONFLICT, ContentType.PLAIN_TEXT, "User logged in");
             }
+            // if user does not exits, go to register
+            //registerUser(request);
+
             return new Response(HttpStatus.CONFLICT, ContentType.PLAIN_TEXT, "User does not exist");
+
         }
         catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)
@@ -67,8 +71,11 @@ public class UserController {
                     return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body");
                 }
             // Check if the user already exists
-            if (userService.userExists(user.getUsername())) {
+            if (userService.userExists(user)) {
+                // if user already exists, then go to login
+                // loginUser(request)
                 return new Response(HttpStatus.CONFLICT, ContentType.PLAIN_TEXT, "User already exists");
+                // if user already exists, then go to login
             }
 
             // Save user to the database

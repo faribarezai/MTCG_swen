@@ -1,6 +1,11 @@
 import httpserver.server.Server;
 import mtcg.dal.DatabaseManager;
+import mtcg.model.Card;
+import mtcg.model.User;
 import mtcg.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -13,9 +18,38 @@ public class Main {
             Server server = new Server();
             server.start();
 
+            UserService userService = new UserService();
+           /*
+            List<Card> stack= new ArrayList<>();
+            List<Card> deck= new ArrayList<>();
+            User kienboec = new User("kienboec", "daniel", deck, stack,20);
+
              // create users
             UserService userService = new UserService();
-           // UserService myuserService = new UserService(DatabaseManager.INSTANCE.getConnection());
+            boolean exists =userService.userExists(kienboec);
+            System.out.println(exists);
+           if(!exists){
+               userService.saveUser(kienboec);
+               System.out.println(kienboec.getUsername() + " was successfully added to db!!");
+           }
+           System.out.println(kienboec.getUsername() + " already exists!!,");
+            System.out.println(kienboec.getUsername() + " was logged in successfully!!,");
+           // -------------------------------------------------------------------------------------
+
+            User kkien = new User("kienboec", "password", deck, stack,20);
+
+            boolean exist =userService.userExists(kkien);
+            System.out.println(exist);
+            if(!exist) {
+                userService.saveUser(kkien);
+                System.out.println(kkien.getUsername() + " was successfully added to db!!");
+            }
+            System.out.println(kkien.getUsername() + " was logged in successfully!!,");
+*/
+
+
+
+            // UserService myuserService = new UserService(DatabaseManager.INSTANCE.getConnection());
             //CardService = new CardService(/* pass dependencies if needed */);
             // ... other components
 

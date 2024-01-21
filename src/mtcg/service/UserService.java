@@ -20,14 +20,18 @@ public class UserService implements Service {
     public UserService() {
         this.userController=new UserController();
     }
-    public boolean userExists(String username) {
+    public boolean userExists(User user) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM mUser WHERE Username = ?")) {
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatement.executeQuery();
+
+
 
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
+                // Printing the count
+               // System.out.println("Number of users with username " + user.getUsername() + ": " + count);
                 return count > 0;
             }
         } catch (SQLException e) {

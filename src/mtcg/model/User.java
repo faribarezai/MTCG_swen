@@ -21,13 +21,12 @@ public class User {
     @Getter
     List<Integer> scoreboard;// shall be in battlelogic
 
-    public User(String username, String password, List<Card> deck, List<Card> stack, int coins, List<Integer> scoreboard) {
+    public User(String username, String password, List<Card> deck, List<Card> stack, int coins) {
         this.Username = username;
         this.Password = password;
         this.deck = deck;
         this.coins = coins;
         this.stack = stack;
-        this.scoreboard = scoreboard;
 
     }
 
