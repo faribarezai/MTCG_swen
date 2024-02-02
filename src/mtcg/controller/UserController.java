@@ -32,11 +32,12 @@ public class UserController {
 
             String requestBody = request.getBody();
             User user = objectMapper.readValue(requestBody, User.class);
-
+            System.out.println("User: "+user+ " pasw: "+user.getPassword() );
             // Validate the request body
             if (user == null || user.getUsername() == null || user.getPassword() == null
                     || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body");
+               // System.out.println("User: "+user+ " pasw: "+user.getPassword() );
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body for login");
             }
 
             // Check if the user already exists
@@ -65,10 +66,11 @@ public class UserController {
                 String requestBody = request.getBody();
                 User user = objectMapper.readValue(requestBody, User.class);
 
+            System.out.println("User: "+user+ " pasw: "+user.getPassword() );
                 // Validate the request body
                 if (user == null || user.getUsername() == null || user.getPassword() == null
                         || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-                    return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body");
+                    return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Invalid request body for registration");
                 }
             // Check if the user already exists
             if (userService.userExists(user)) {

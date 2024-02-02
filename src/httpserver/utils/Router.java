@@ -19,7 +19,10 @@ public class Router {
 
     private void initializeRoute() {
         //User Service
+        /*
         serviceRegistry.put("/users", new UserService()); // controller oder service?
+
+        resolve("/users");
         serviceRegistry.put("/sessions", new UserService());
         serviceRegistry.put("/users/{username}", new UserService());
 
@@ -31,6 +34,21 @@ public class Router {
         //PackageService
         serviceRegistry.put("/packages", new PackageService());
         serviceRegistry.put("/transactions/packages", new PackageService());
+       */
+        Map<String, Service> routes = Map.of(
+                "/users", new UserService(),
+                "/sessions", new UserService(),
+                "/users/{username}", new UserService(),
+                "/cards", new CardService(),
+                "/deck", new CardService(),
+                "/trading", new CardService(),
+                "/tradings/{ttid}", new CardService(),
+                "/packages", new PackageService(),
+                "/transactions/packages", new PackageService()
+        );
+
+        // Add routes and services to the serviceRegistry
+        serviceRegistry.putAll(routes);
 
     }
 
@@ -43,7 +61,8 @@ public class Router {
     }
 
     public Service resolve(String route) {
-
+        return serviceRegistry.get(route);
+        /*
         for (Map.Entry<String, Service> serviceEntry : serviceRegistry.entrySet()) {
             String registeredRoute = serviceEntry.getKey();
             Service service = serviceEntry.getValue();
@@ -72,6 +91,7 @@ public class Router {
             }
         }
         return true;
+        */
     }
 
 }

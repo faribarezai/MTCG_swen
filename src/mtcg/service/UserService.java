@@ -22,7 +22,7 @@ public class UserService implements Service {
     }
     public boolean userExists(User user) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM mUser WHERE Username = ?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM mUser WHERE username = ?")) {
             preparedStatement.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -43,7 +43,7 @@ public class UserService implements Service {
 
     public void saveUser(User user) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mUser (Username, Password coins,ELOvalue ) VALUES (?, ?, ?, ?)")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mUser (username, password coins,ELOvalue ) VALUES (?, ?, ?, ?)")) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.executeUpdate();
@@ -54,7 +54,16 @@ public class UserService implements Service {
 
     @Override
     public Response handleRequest(Request request) {
+        String token = request.getAuthorizationToken();
+        if (token != null) {
+            System.out.println("Congrats: token is not null!!");
+        }
+        else {System.out.println("Error: token is null!!");}
+
         String route = request.getServiceRoute();
+       // String route = request.initializeRoute();
+        System.out.println("in userservice handlerequest: " + route);
+
         if ("/users".equals(route) && request.getMethod() == Method.POST) {
             return userController.registerUser(request);
         }

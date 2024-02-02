@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MTCG_swen" options="--add-exports java.base/jdk.internal.classfile.impl=ALL-UNNAMED" />
+      <module name="MTCG_swen" options="" />
     </option>
   </component>
 </project>
