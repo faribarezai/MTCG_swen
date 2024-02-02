@@ -1,4 +1,5 @@
 import httpserver.server.Server;
+import httpserver.utils.Router;
 import mtcg.dal.DatabaseManager;
 import mtcg.model.Card;
 import mtcg.model.User;
@@ -6,12 +7,14 @@ import mtcg.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.SocketHandler;
 
 
 public class Main {
     public static void main(String[] args) {
-
         System.out.println("Lets play.... Monster Trading Card Game!");
+
+        //Router router= new Router();
 
         try {
             // start server
@@ -19,6 +22,13 @@ public class Main {
             server.start();
 
             UserService userService = new UserService();
+
+          /*  router.addService("/sessions", new UserService());
+            router.addService("/users/{username}", new UserService());
+            router.addService("/users", new UserService()); // controller oder service?
+
+            */
+
            /*
             List<Card> stack= new ArrayList<>();
             List<Card> deck= new ArrayList<>();

@@ -10,10 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
-    private Map<String, Service> serviceRegistry;
+    private Map<String, Service> serviceRegistry= new HashMap<>();
 
     public Router() {
-        serviceRegistry = new HashMap<>();
         initializeRoute();
     }
 

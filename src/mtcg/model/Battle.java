@@ -3,9 +3,9 @@ package mtcg.model;
 
 import java.util.List;
 
-public class BattleLogic {
+public class Battle {
 
-    public static BattleLogic conductBattle(User user1, User user2) {
+    public static Battle conductBattle(User user1, User user2) {
         // Implement the battle logic as described in the prompt
         // ...
 

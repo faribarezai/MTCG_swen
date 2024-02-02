@@ -43,7 +43,7 @@ public class UserService implements Service {
 
     public void saveUser(User user) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mUser (Username, Password) VALUES (?, ?)")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mUser (Username, Password coins,ELOvalue ) VALUES (?, ?, ?, ?)")) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.executeUpdate();

@@ -10,19 +10,19 @@ echo.
 REM --------------------------------------------------
 echo 1) Create Users (Registration)
 REM Create User
-curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\"}"
+curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\", \"coins\":\"20\", \"ELOvalue\":\"80\"}"
 echo.
-curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"altenhof\", \"Password\":\"markus\"}"
+curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"altenhof\", \"Password\":\"markus\", \"coins\":\"20\", \"ELOvalue\":\"100\"}"
 echo.
-curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"admin\",    \"Password\":\"istrator\"}"
+curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"admin\",    \"Password\":\"istrator\", \"coins\":\"20\", \"ELOvalue\":\"80\"}"
 echo.
 
 
 
 echo should fail:
-curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\"}"
+curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\", \"coins\":\"20\", \"ELOvalue\":\"100\"}"
 echo.
-curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"different\"}"
+curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"different\", \"coins\":\"20\", \"ELOvalue\":\"80\"}"
 echo.
 echo.
 
@@ -47,9 +47,9 @@ echo.
 
 REM --------------------------------------------------
 echo 3) create packages (done by "admin")
-curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"Id\":\"845f0dc7-37d0-426e-994e-43fc3ac83c08\", \"Name\":\"WaterGoblin\", \"Damage\": 10.0}, {\"Id\":\"99f8f8dc-e25e-4a95-aa2c-782823f36e2a\", \"Name\":\"Dragon\", \"Damage\": 50.0}, {\"Id\":\"e85e3976-7c86-4d06-9a80-641c2019a79f\", \"Name\":\"WaterSpell\", \"Damage\": 20.0}, {\"Id\":\"1cb6ab86-bdb2-47e5-b6e4-68c5ab389334\", \"Name\":\"Ork\", \"Damage\": 45.0}, {\"Id\":\"dfdd758f-649c-40f9-ba3a-8657f4b3439f\", \"Name\":\"FireSpell\",    \"Damage\": 25.0}]"
+curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"Id\":\"1\", \"Name\":\"WaterGoblin\", \"Damage\": 10.0}, {\"Id\":\"2\", \"Name\":\"Dragon\", \"Damage\": 50.0}, {\"Id\":\"3\", \"Name\":\"WaterSpell\", \"Damage\": 20.0}, {\"Id\":\"4\", \"Name\":\"Ork\", \"Damage\": 45.0}, {\"Id\":\"5\", \"Name\":\"FireSpell\",    \"Damage\": 25.0}]"
 echo.
-curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"Id\":\"644808c2-f87a-4600-b313-122b02322fd5\", \"Name\":\"WaterGoblin\", \"Damage\":  9.0}, {\"Id\":\"4a2757d6-b1c3-47ac-b9a3-91deab093531\", \"Name\":\"Dragon\", \"Damage\": 55.0}, {\"Id\":\"91a6471b-1426-43f6-ad65-6fc473e16f9f\", \"Name\":\"WaterSpell\", \"Damage\": 21.0}, {\"Id\":\"4ec8b269-0dfa-4f97-809a-2c63fe2a0025\", \"Name\":\"Ork\", \"Damage\": 55.0}, {\"Id\":\"f8043c23-1534-4487-b66b-238e0c3c39b5\", \"Name\":\"WaterSpell\",   \"Damage\": 23.0}]"
+curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"Id\":\"6\", \"Name\":\"WaterGoblin\", \"Damage\":  9.0}, {\"Id\":\"4a2757d6-b1c3-47ac-b9a3-91deab093531\", \"Name\":\"Dragon\", \"Damage\": 55.0}, {\"Id\":\"91a6471b-1426-43f6-ad65-6fc473e16f9f\", \"Name\":\"WaterSpell\", \"Damage\": 21.0}, {\"Id\":\"4ec8b269-0dfa-4f97-809a-2c63fe2a0025\", \"Name\":\"Ork\", \"Damage\": 55.0}, {\"Id\":\"f8043c23-1534-4487-b66b-238e0c3c39b5\", \"Name\":\"WaterSpell\",   \"Damage\": 23.0}]"
 echo.
 curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"Id\":\"b017ee50-1c14-44e2-bfd6-2c0c5653a37c\", \"Name\":\"WaterGoblin\", \"Damage\": 11.0}, {\"Id\":\"d04b736a-e874-4137-b191-638e0ff3b4e7\", \"Name\":\"Dragon\", \"Damage\": 70.0}, {\"Id\":\"88221cfe-1f84-41b9-8152-8e36c6a354de\", \"Name\":\"WaterSpell\", \"Damage\": 22.0}, {\"Id\":\"1d3f175b-c067-4359-989d-96562bfa382c\", \"Name\":\"Ork\", \"Damage\": 40.0}, {\"Id\":\"171f6076-4eb5-4a7d-b3f2-2d650cc3d237\", \"Name\":\"RegularSpell\", \"Damage\": 28.0}]"
 echo.
@@ -134,7 +134,6 @@ curl -i -X GET http://localhost:10001/cards --header "Authorization: Bearer alte
 echo.
 echo.
 
-pause
 
 REM --------------------------------------------------
 echo 10) show unconfigured deck
@@ -179,7 +178,6 @@ curl -i -X GET http://localhost:10001/deck --header "Authorization: Bearer alten
 echo.
 echo.
 
-pause
 
 REM --------------------------------------------------
 echo 13) show configured deck different representation
@@ -192,7 +190,7 @@ curl -i -X GET http://localhost:10001/deck?format=plain --header "Authorization:
 echo.
 echo.
 
-pause
+
 
 REM --------------------------------------------------
 echo 14) edit user data
@@ -211,7 +209,6 @@ curl -i -X GET http://localhost:10001/users/altenhof --header "Authorization: Be
 echo.
 echo.
 
-pause
 
 echo should fail:
 curl -i -X GET http://localhost:10001/users/altenhof --header "Authorization: Bearer kienboec-mtcgToken"
@@ -226,7 +223,7 @@ curl -i -X GET http://localhost:10001/users/someGuy  --header "Authorization: Be
 echo.
 echo.
 
-pause
+
 
 REM --------------------------------------------------
 echo 15) stats
@@ -236,7 +233,7 @@ curl -i -X GET http://localhost:10001/stats --header "Authorization: Bearer alte
 echo.
 echo.
 
-pause
+
 
 REM --------------------------------------------------
 echo 16) scoreboard
@@ -252,7 +249,7 @@ start /b "kienboec battle" curl -i -X POST http://localhost:10001/battles --head
 start /b "altenhof battle" curl -i -X POST http://localhost:10001/battles --header "Authorization: Bearer altenhof-mtcgToken"
 ping localhost -n 10 >NUL 2>NUL
 
-pause
+
 
 REM --------------------------------------------------
 echo 18) Stats
@@ -264,7 +261,7 @@ curl -i -X GET http://localhost:10001/stats --header "Authorization: Bearer alte
 echo.
 echo.
 
-pause
+
 
 REM --------------------------------------------------
 echo 19) scoreboard
@@ -272,7 +269,7 @@ curl -i -X GET http://localhost:10001/scoreboard --header "Authorization: Bearer
 echo.
 echo.
 
-pause
+
 
 REM --------------------------------------------------
 echo 20) trade
@@ -283,7 +280,7 @@ echo create trading deal
 curl -i -X POST http://localhost:10001/tradings --header "Content-Type: application/json" --header "Authorization: Bearer kienboec-mtcgToken" -d "{\"Id\": \"6cd85277-4590-49d4-b0cf-ba0a921faad0\", \"CardToTrade\": \"1cb6ab86-bdb2-47e5-b6e4-68c5ab389334\", \"Type\": \"monster\", \"MinimumDamage\": 15}"
 echo.
 
-pause
+
 
 echo check trading deals
 curl -i -X GET http://localhost:10001/tradings --header "Authorization: Bearer kienboec-mtcgToken"
@@ -291,7 +288,9 @@ echo.
 curl -i -X GET http://localhost:10001/tradings --header "Authorization: Bearer altenhof-mtcgToken"
 echo.
 
-pause
+
+
+
 
 echo delete trading deals
 curl -i -X DELETE http://localhost:10001/tradings/6cd85277-4590-49d4-b0cf-ba0a921faad0 --header "Authorization: Bearer kienboec-mtcgToken"

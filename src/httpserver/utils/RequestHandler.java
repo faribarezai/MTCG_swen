@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.logging.Logger;
 
 public class RequestHandler implements Runnable {
-    private Logger logger;
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     private Socket clientSocket;
     private Router router;
     private PrintWriter printWriter;
