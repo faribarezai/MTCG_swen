@@ -18,7 +18,7 @@ public class PackageService implements Service {
     public static Response buyPackage(User user) {
         // Check if the user has enough coins to buy a package
         if (user.getCoins() < COINS_PER_PACKAGE) {
-            return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Not enough coins to buy a package");
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy a package");
         }
 
         // Deduct coins from the user's account
@@ -71,7 +71,7 @@ public class PackageService implements Service {
          else {System.out.println("Error: token is null!!");}
 
         // Example: Handle transactions logic here
-        return new Response(HttpStatus.OK, ContentType.PLAIN_TEXT, "Package operation successful");
+        return new Response(HttpStatus.OK, ContentType.JSON, "Package operation successful");
     }
 
 

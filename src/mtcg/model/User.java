@@ -7,9 +7,9 @@ import java.util.List;
 public class User {
     private int id;
     @Getter
-    private String Username;
+    private String username;
     @Getter
-    private String Password;
+    private String password;
     @Getter
     private List<Card> deck;
     @Getter
@@ -17,16 +17,18 @@ public class User {
     ///////Getter Methods-------------------------------------------
     @Getter
     private int coins = 20;
-    private int ELOvalue = 100;
+    @Getter
+    private int elo = 100;
     @Getter
     List<Integer> scoreboard;// shall be in battlelogic
 
-    public User(String username, String password, List<Card> deck, List<Card> stack, int coins) {
-        this.Username = username;
-        this.Password = password;
+    public User(String username, String password, List<Card> deck, List<Card> stack, int coins, int elo) {
+        this.username = username;
+        this.password = password;
         this.deck = deck;
         this.coins = coins;
         this.stack = stack;
+        this.elo = elo;
 
     }
 
@@ -38,7 +40,7 @@ public class User {
     }
 
     public int getElo() {
-        return ELOvalue;
+        return elo;
     }
 
     public long getId() {
@@ -49,8 +51,8 @@ public class User {
         this.coins = getCoins() - coinsPerPackage;
     }
 
-    public int setElo(int i) {
-        return ELOvalue = i;
+    public void setElo(int i) {
+        elo = i;
     }
 }
 

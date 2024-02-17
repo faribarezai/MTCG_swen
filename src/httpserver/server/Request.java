@@ -78,7 +78,7 @@ public class Request {
     }
 
     public String getAuthorizationToken() {
-        String authorizationHeader = headerMap.getHeader("Authorization");
+        String authorizationHeader = headerMap.getHeader("Authorization: ");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             return authorizationHeader.substring(7); // Extracting token from "Bearer TOKEN"
         }

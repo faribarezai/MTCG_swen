@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS mUser (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     coins INT DEFAULT 20,
-    ELOvalue INT DEFAULT 100
+    elo INT DEFAULT 100
     );
 
 ALTER TABLE mUser
@@ -57,3 +57,5 @@ CREATE TABLE IF NOT EXISTS battle (
 
 ALTER TABLE battle
     owner TO postgres;
+
+---INSERT INTO mUser(username, password, coins, elo) VALUES ('Tim', 'passwords', 20, 100);

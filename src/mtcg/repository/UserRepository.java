@@ -15,8 +15,8 @@ public class UserRepository {
         this.unitOfWork = unitOfWork;
     }
 
-    public void updatePlayer(User user) {
-        String sql = "UPDATE mUser SET Username = ?, Password = ?, elo = ? WHERE userId = ?";
+    public void updateUser(User user) {
+        String sql = "UPDATE mUser SET username = ?, password = ?, elo = ? WHERE userId = ?";
 
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getUsername());
