@@ -1,6 +1,9 @@
 package mtcg.service;
 
 
+import httpserver.http.ContentType;
+import httpserver.http.HttpStatus;
+import httpserver.http.Method;
 import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
@@ -27,8 +30,16 @@ public class CardService implements Service {
 
     @Override
     public Response handleRequest(Request request) {
-        return null;
-    }
+    String route = request.getServiceRoute();
 
+        if ("/cards".equals(route) && request.getMethod() == Method.GET) {
+        //return cardController.aquireCard(request);
+    }
+        if ("/deck".equals(route) && request.getMethod() == Method.GET) {
+       // return cardController.configureDeck(request);
+    }
+    // Handle other routes and methods as needed
+        return new Response(HttpStatus.OK, ContentType.JSON, "handle Card process successful");
+}
     // Add other methods for card-related business logic as needed
 }

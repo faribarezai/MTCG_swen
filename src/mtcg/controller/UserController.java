@@ -38,13 +38,12 @@ public class UserController {
             }
 
             // Check if the user already exists
-            if (userExists(user)) {
 
+            if (userExist(user)){
                 return new Response(HttpStatus.OK, ContentType.JSON, "User logged in successfully");
-            }
-            else {
+            }else
                 return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User does not exist");
-            }
+
 
         } catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)
@@ -91,7 +90,7 @@ public class UserController {
 
     }
 
-    //User exists?
+    //User exists for registration?
     public boolean userExists(User user) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM mUser WHERE username = ?")) {
@@ -99,10 +98,37 @@ public class UserController {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             //check how many users are with same name in db
+
+           // int pwscount = resultSet.getInt(2);
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
-                return count > 0;
+                return count >0;
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+
+        return false;
+    }
+
+
+    //check User exists with name +psw for login
+    public boolean userExist(User user) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM mUser WHERE username = ? AND password= ?")) {
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            //check how many users are with same name in db
+
+            // int pwscount = resultSet.getInt(2);
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count >0;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
