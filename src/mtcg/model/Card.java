@@ -5,13 +5,14 @@ import lombok.Getter;
 @Getter
 public class Card{
     private String name;
-    private int id;
+    private int cardId;
     private int damage;
     private ElementType element;
     @Getter
     private CardType cardType;
 
 
+    public Card(){}
     public Card(String name,CardType ct, int damage, ElementType elem) {
         this.name=name;
         this.damage=damage;

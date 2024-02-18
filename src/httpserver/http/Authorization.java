@@ -1,4 +1,7 @@
-package httpserver.http;
+/*package httpserver.http;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum Authorization {
 
@@ -13,8 +16,18 @@ public enum Authorization {
     Authorization(String token) {
         this.token = token;
     }
-    //String authorizationKienboec = Authorization.KIENBOEC.getAuthorizationHeader(
+
+    public static boolean isValidToken(String token) {
+        for (Authorization authorization : Authorization.values()) {
+            if (token.equals(authorization.token)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getAuthorizationHeader() {
         return "Authorization: Bearer " + token;
     }
 }
+*/

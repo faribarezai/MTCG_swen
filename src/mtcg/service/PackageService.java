@@ -2,18 +2,26 @@ package mtcg.service;
 
 import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
+import httpserver.http.Method;
 import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
+import mtcg.controller.PackageController;
 import mtcg.model.Card;
 import mtcg.model.User;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class PackageService implements Service {
     private static final int CARDS_PER_PACKAGE = 5;
     private static final int COINS_PER_PACKAGE = 5;
+    private PackageController packageController;
+
+
+    public PackageService(){this.packageController= new PackageController();}
 
     public static Response buyPackage(User user) {
         // Check if the user has enough coins to buy a package
@@ -35,7 +43,7 @@ public class PackageService implements Service {
     private static List<Card> generateCards() {
 
         //System.out.println("Id: " + card.getId() + "Name: " +card.getName() + ", Damage: " + card.getDamage());
-        List<Card> packageCards = retrieveCardsFromDatabase();
+        List<Card> packageCards = new ArrayList<>();
 
         // Implement the logic to process each card in the package
         // For example, you can add each card to the user's deck, save them to the database, etc.
@@ -56,23 +64,35 @@ public class PackageService implements Service {
 
 
 
-
     @Override
     public Response handleRequest(Request request) {
-        // Implement package-related logic here
-        // Parse request body, handle JSON, etc.
-        // You can use request.getHeaders() to access headers (e.g., Authorization)
+        String route = request.getServiceRoute();
+        //System.out.println("route -> " + route);
 
-        // Example: Checking Authorization header
-        String token = request.getAuthorizationToken();
-        if (token != null) {
-            System.out.println("Congrats: token is not null!!");
-        }
-         else {System.out.println("Error: token is null!!");}
+      //  String token= request.getAuth();
+       // System.out.print
+        // ln("Token -> " + token);
 
-        // Example: Handle transactions logic here
-        return new Response(HttpStatus.OK, ContentType.JSON, "Package operation successful");
+                if ("/packages".equals(route) && request.getMethod() == Method.POST) {
+
+                    return packageController.createPackages(request);
+                }
+
+                if ("/transactions/packages".equals(route) && request.getMethod() == Method.POST) {
+                    return packageController.createPackages(request);
+                }
+
+                return new Response(HttpStatus.OK, ContentType.JSON, "Package operation successful");
+
+                // return new Response(HttpStatus.UNAUTHORIZED, ContentType.JSON, "Unauthorized request");
     }
 
 
+
+
 }
+
+
+
+
+

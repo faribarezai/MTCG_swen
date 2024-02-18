@@ -17,14 +17,14 @@ public class CardRepository {
     }
 
     public void updateCard(Card card) {
-        String sql = "UPDATE card SET name = ?, damage = ?, element = ?, cardType = ? WHERE cardId = ?";
+        String sql = "UPDATE card SET cardId=?, name = ?, damage = ?, element = ?, cardType = ? WHERE cardId = ?";
 
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            preparedStatement.setString(1, card.getName());
-            preparedStatement.setInt(2, card.getDamage());
-            preparedStatement.setString(3, String.valueOf((card.getElementType())));
-            preparedStatement.setString(4, card.getCardType().toString());
-            preparedStatement.setInt(5, card.getId());
+            preparedStatement.setInt(1, card.getCardId());
+            preparedStatement.setString(2, card.getName());
+            preparedStatement.setInt(3, card.getDamage());
+            preparedStatement.setString(4, String.valueOf((card.getElementType())));
+            preparedStatement.setString(5, card.getCardType().toString());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,5 +1,6 @@
 package httpserver.server;
 
+
 import java.util.HashMap;
 import java.util.Map;
 public class HeaderMap {
@@ -27,5 +28,12 @@ public class HeaderMap {
     public void print() {
         System.out.println(headers);
     }
+
+   /* public void addAuthtoken() {
+        for (Authorization authorization : Authorization.values()) {
+            headers.put("Authorization: " + authorization.token, authorization.getAuthorizationHeader());
+        }
+    }*/
+
 }
 

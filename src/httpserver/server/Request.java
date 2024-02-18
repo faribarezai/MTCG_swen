@@ -3,8 +3,7 @@ package httpserver.server;
 import httpserver.http.Method;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 public class Request {
@@ -15,6 +14,7 @@ public class Request {
     private String params;
     private HeaderMap headerMap =  new HeaderMap();
     private String body;
+   // private String auth= "Authorization: Bearer ";
 
     public String getServiceRoute(){
         if (this.pathParts == null ||
@@ -44,7 +44,24 @@ public class Request {
     public void setMethod(Method method) {
         this.method = method;
     }
+    public String getAuth() {
+            String authHeader = headerMap.getHeader("Authorization:");
 
+            System.out.println("authHeader " +authHeader);
+
+            if (authHeader != null && authHeader.startsWith(" Bearer ")) {
+                String extractedToken = authHeader.substring(7); // Extracting token from "Bearer TOKEN"
+
+                List<String> validTokens = Arrays.asList("kienboec-mtcgToken", "admin-mtcgToken", "altenhof-mtcgToken");
+
+                if (validTokens.contains(extractedToken)) {
+                    return authHeader + extractedToken;
+                }
+            }
+
+            return null;
+
+    }
 
     public void setPathname(String pathname) {
         this.pathname = pathname;
@@ -77,12 +94,6 @@ public class Request {
         this.pathParts = pathParts;
     }
 
-    public String getAuthorizationToken() {
-        String authorizationHeader = headerMap.getHeader("Authorization: ");
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return authorizationHeader.substring(7); // Extracting token from "Bearer TOKEN"
-        }
-        return null;
-    }
+
 }
 

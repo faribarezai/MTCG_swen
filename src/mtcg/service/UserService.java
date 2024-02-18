@@ -18,13 +18,18 @@ import java.util.UUID;
 
 public class UserService implements Service {
     private final UserController userController;
+    private User user;
     public UserService() {
+
         this.userController=new UserController();
+        this.user=new User();
     }
+
 
     @Override
     public Response handleRequest(Request request) {
         String route = request.getServiceRoute();
+        String uEndpoint=  "/users/" +user.getUsername();
 
         if ("/users".equals(route) && request.getMethod() == Method.POST) {
             return userController.registerUser(request);
@@ -33,6 +38,13 @@ public class UserService implements Service {
         if ("/sessions".equals(route) && request.getMethod() == Method.POST) {
             return userController.loginUser(request);
         }
+        //curl -i -X GET http://localhost:10001/users/kienboec --header "Authorization: Bearer kienboec-mtcgToken"
+        if (uEndpoint.equals(route) && request.getMethod() == Method.GET) {
+            return userController.loginUser(request);
+        }
+
+
+
         // Handle other routes and methods as needed
         return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful");
     }
