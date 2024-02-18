@@ -8,11 +8,13 @@ import java.util.List;
 public class Package {
     private int id;
     @Getter
-    private List<Card> cards;
+    private List<Integer> cardIds;
 
-    public Package(List<Card> card) {
-        this.cards= card;
+    public Package(List<Integer> card) {
+        this.cardIds= card;
 
     }
-
+    public List<Integer> getCardIds() {
+        return cardIds;
+    }
 }

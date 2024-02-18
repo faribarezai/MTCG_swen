@@ -7,7 +7,10 @@ import httpserver.http.HttpStatus;
 import httpserver.server.Request;
 import httpserver.server.Response;
 import mtcg.model.Card;
-import mtcg.model.User;
+import mtcg.model.Package;
+
+// other import statements...
+
 import mtcg.service.PackageService;
 
 import java.sql.Connection;
@@ -33,17 +36,17 @@ public class PackageController {
             // Parse the JSON body from the request
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            System.out.println("Requestbody" + requestBody);
-
             List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<List<Card>>() {});
+            List<Integer> cardIds = new ArrayList<>();
 
             for (Card card : cards) {
-                System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
+               // System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
                 saveCard(card);
+                cardIds.add(card.getCardId());
             }
-            //Card card = objectMapper.readValue(requestBody, Card.class);
-           // System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage()+ ", " + card.getElementType()+ ", " + card.getCardType());
-            //saveCard(card);
+            Package pckg = new Package(cardIds);
+            savePackage(pckg);
+
             return new Response(HttpStatus.CREATED, ContentType.JSON, "Card was added successfully");
 
         } catch (Exception e) {
@@ -57,22 +60,20 @@ public class PackageController {
 
 
 
-   /* public void saveCard(Card card) {
+    public void savePackage(Package pckg) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO card (cardId, name, damage, element, cardType) VALUES (?, ?, ?, ?, ?)")) {
-            preparedStatement.setInt(1, card.getCardId());
-            preparedStatement.setString(2, card.getName());
-            preparedStatement.setInt(3, card.getDamage());
-            preparedStatement.setString(4, card.getElementType().name());
-            preparedStatement.setString(5, card.getCardType().name());
-            System.out.println("SQL Query: " + preparedStatement.toString());
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO package (cardIds) VALUES (?)")) {
+            Integer[] cardIdsArray = pckg.getCardIds().toArray(new Integer[0]);
+
+            preparedStatement.setArray(1, connection.createArrayOf("INTEGER", cardIdsArray));
+           // System.out.println("SQL Query: " + preparedStatement.toString());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
     }
-*/
+
 
 
     public void saveCard(Card card) {

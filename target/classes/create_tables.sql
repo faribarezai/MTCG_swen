@@ -41,7 +41,8 @@ ALTER TABLE card
 
 -- Package Table
 CREATE TABLE IF NOT EXISTS package (
-    pckgId SERIAL PRIMARY KEY
+    pckgId SERIAL PRIMARY KEY,
+    cardIds INTEGER[]
 );
 ALTER TABLE package
     owner TO postgres;
