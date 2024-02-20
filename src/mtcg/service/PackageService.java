@@ -67,19 +67,22 @@ public class PackageService implements Service {
     @Override
     public Response handleRequest(Request request) {
         String route = request.getServiceRoute();
-        //System.out.println("route -> " + route);
+        String auth= request.getAuthorizationHeader();
+        System.out.println("authentication: " + auth);
 
-      //  String token= request.getAuth();
-       // System.out.print
-        // ln("Token -> " + token);
 
                 if ("/packages".equals(route) && request.getMethod() == Method.POST) {
-
-                    return packageController.createPackages(request);
+                    if(auth=="Authorization: Bearer admin-mtcgToken") {
+                        return packageController.createPackages(request);
+                    }
                 }
-
+                //acquire packages kienboec
                 if ("/transactions/packages".equals(route) && request.getMethod() == Method.POST) {
-                    return packageController.createPackages(request);
+                    if(auth=="Authorization: Bearer altenhof-mtcgToken" ||
+                            auth=="Authorization: Bearer kienboec-mtcgToken" ) {
+                        return packageController.createPackages(request);
+                    }
+                    else return new Response(HttpStatus.UNAUTHORIZED, ContentType.JSON, "unauthorized User - Authentication failed!");
                 }
 
                 return new Response(HttpStatus.OK, ContentType.JSON, "Package operation successful");

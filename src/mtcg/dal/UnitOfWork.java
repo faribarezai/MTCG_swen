@@ -12,7 +12,7 @@ public class UnitOfWork implements AutoCloseable{
     public UnitOfWork() {
         this.connection = DatabaseManager.INSTANCE.getConnection();
         try {
-            this.connection.setAutoCommit(false);
+            this.connection.setAutoCommit(true);
         } catch (SQLException e) {
             throw new DataAccessException("Autocommit nicht deaktivierbar", e);
         }

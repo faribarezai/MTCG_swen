@@ -20,7 +20,13 @@ public class RequestBuilder {
 
             line = bufferedReader.readLine();
             while (!line.isEmpty()) {
-                request.getHeaderMap().ingest(line);
+                if (line.startsWith("Authorization:")) {
+                    request.getHeaderMap().setAuthorization(line.substring("Authorization:".length()).trim());
+                } else {
+                    request.getHeaderMap().ingest(line);
+                }
+
+                //request.getHeaderMap().ingest(line);
                 line = bufferedReader.readLine();
             }
 

@@ -20,7 +20,6 @@ public class UserService implements Service {
     private final UserController userController;
     private User user;
     public UserService() {
-
         this.userController=new UserController();
         this.user=new User();
     }

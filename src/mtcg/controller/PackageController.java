@@ -11,21 +11,23 @@ import mtcg.model.Package;
 
 // other import statements...
 
+import mtcg.repository.PackageRepository;
+import mtcg.repository.UserRepository;
 import mtcg.service.PackageService;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PackageController {
-    private PackageService packageService;
+    private PackageRepository packageRepo = new PackageRepository();
     private Card card;
     private List<Card> packages= new ArrayList<>();
 
     public PackageController() {}
+    public PackageController(PackageRepository packageRepo) {
+        this.packageRepo = packageRepo;
+    }
 
     public List<Card> getPackage() {
         return this.packages;
@@ -41,11 +43,11 @@ public class PackageController {
 
             for (Card card : cards) {
                // System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
-                saveCard(card);
+                packageRepo.saveCard(card);
                 cardIds.add(card.getCardId());
             }
             Package pckg = new Package(cardIds);
-            savePackage(pckg);
+            packageRepo.savePackage(pckg);
 
             return new Response(HttpStatus.CREATED, ContentType.JSON, "Card was added successfully");
 
@@ -58,17 +60,24 @@ public class PackageController {
     }
 
 
+  /*  public void savePackage(Package pckg) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
+            // Check if any of the cardIds already exist
+            if (cardIdsExist(connection, pckg.getCardIds())) {
+                System.out.println("cardIds already exist. Package not saved.");
+                return;  // Do not proceed with saving the package
+            }
 
-
-    public void savePackage(Package pckg) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
+        try (Connection con =  DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password");
              PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO package (cardIds) VALUES (?)")) {
             Integer[] cardIdsArray = pckg.getCardIds().toArray(new Integer[0]);
 
             preparedStatement.setArray(1, connection.createArrayOf("INTEGER", cardIdsArray));
-           // System.out.println("SQL Query: " + preparedStatement.toString());
+            // System.out.println("SQL Query: " + preparedStatement.toString());
 
             preparedStatement.executeUpdate();
+            System.out.println("Package saved successfully.");
+        }
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
@@ -91,5 +100,18 @@ public class PackageController {
         }
     }
 
+        private boolean cardIdsExist(Connection connection, List<Integer> cardIds) throws SQLException {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM package WHERE cardIds @> ?::integer[]")) {
+                // Check if any row matches the given cardIds
+                Array cardIdsArray = connection.createArrayOf("integer", cardIds.toArray());
+                preparedStatement.setArray(1, cardIdsArray);
 
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    resultSet.next();
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+*/
 }

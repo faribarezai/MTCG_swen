@@ -29,11 +29,9 @@ public class HeaderMap {
         System.out.println(headers);
     }
 
-   /* public void addAuthtoken() {
-        for (Authorization authorization : Authorization.values()) {
-            headers.put("Authorization: " + authorization.token, authorization.getAuthorizationHeader());
-        }
-    }*/
+    public void setAuthorization(String authorizationHeader) {
+        headers.put("Authorization", authorizationHeader);
+    }
 
 }
 

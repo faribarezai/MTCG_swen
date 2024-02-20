@@ -79,7 +79,37 @@ curl -i -X POST http://localhost:10001/transactions/packages --header "Content-T
 echo.
 echo.
 
-pause
+REM --------------------------------------------------
+echo 5) acquire packages altenhof
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+echo should fail (no package):
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+echo.
+
+REM --------------------------------------------------
+echo 6) add new packages
+curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"cardId\": \"670\", \"name\": \"WaterGoblin\", \"damage\": 10.0, \"element\": \"WATER\", \"cardType\": \"MONSTER\"},{\"cardId\": \"990\", \"name\": \"RegularSpell\", \"damage\": 50.0, \"element\": \"FIRE\", \"cardType\": \"SPELL\"},{\"cardId\": \"363\", \"name\": \"Knight\", \"damage\": 20.0, \"element\": \"NORMAL\", \"cardType\": \"MONSTER\"},{\"cardId\": \"202\", \"name\": \"RegularSpell\", \"damage\": 45.0, \"element\": \"FIRE\", \"cardType\": \"SPELL\"},{\"cardId\": \"250\", \"name\": \"FireElf\", \"damage\": 25.0, \"element\": \"FIRE\", \"cardType\": \"MONSTER\"}]"
+echo.
+curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"cardId\": \"709\", \"name\": \"WaterGoblin\", \"damage\": 9.0, \"element\": \"WATER\", \"cardType\": \"MONSTER\"},{\"cardId\": \"744\", \"name\": \"FireSpell\", \"damage\": 55.0, \"element\": \"FIRE\", \"cardType\": \"SPELL\"},{\"cardId\": \"424\", \"name\": \"Knight\", \"damage\": 21.0, \"element\": \"NORMAL\", \"cardType\": \"MONSTER\"},{\"cardId\": \"844\", \"name\": \"FireSpell\", \"damage\": 55.0, \"element\": \"FIRE\", \"cardType\": \"SPELL\"}, {\"cardId\": \"618\", \"name\": \"FireElf\", \"damage\": 23.0, \"element\": \"FIRE\", \"cardType\": \"MONSTER\"}]"
+echo.
+curl -i -X POST http://localhost:10001/packages --header "Content-Type: application/json" --header "Authorization: Bearer admin-mtcgToken" -d "[{\"cardId\": \"227\", \"name\": \"WaterGoblin\", \"damage\": 11.0, \"element\": \"WATER\", \"cardType\": \"MONSTER\"},{\"cardId\": \"387\", \"name\": \"Dragon\", \"damage\": 70.0, \"element\": \"FIRE\", \"cardType\": \"MONSTER\"},{\"cardId\": \"166\", \"name\": \"Knight\", \"damage\": 22.0, \"element\": \"NORMAL\", \"cardType\": \"MONSTER\"},{\"cardId\": \"237\", \"name\": \"WaterSpell\", \"damage\": 40.0, \"element\": \"WATER\", \"cardType\": \"SPELL\"},{\"cardId\": \"270\", \"name\": \"FireElf\", \"damage\": 28.0, \"element\": \"FIRE\", \"cardType\": \"MONSTER\"}]"
+echo.
+echo.
+
+REM --------------------------------------------------
+echo 7) acquire newly created packages altenhof
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+echo should fail (no money):
+curl -i -X POST http://localhost:10001/transactions/packages --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d ""
+echo.
+echo.
 
 REM --------------------------------------------------
 echo end...

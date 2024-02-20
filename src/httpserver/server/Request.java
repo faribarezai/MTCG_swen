@@ -1,11 +1,14 @@
 package httpserver.server;
 
 import httpserver.http.Method;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
 @Getter
+@Setter(AccessLevel.PROTECTED)
 public class Request {
     private Method method;
     private String urlContent;
@@ -14,7 +17,7 @@ public class Request {
     private String params;
     private HeaderMap headerMap =  new HeaderMap();
     private String body;
-   // private String auth= "Authorization: Bearer ";
+    private final String AUTHORIZATION = "Authorization: ";
 
     public String getServiceRoute(){
         if (this.pathParts == null ||
@@ -43,24 +46,6 @@ public class Request {
 
     public void setMethod(Method method) {
         this.method = method;
-    }
-    public String getAuth() {
-            String authHeader = headerMap.getHeader("Authorization:");
-
-            System.out.println("authHeader " +authHeader);
-
-            if (authHeader != null && authHeader.startsWith(" Bearer ")) {
-                String extractedToken = authHeader.substring(7); // Extracting token from "Bearer TOKEN"
-
-                List<String> validTokens = Arrays.asList("kienboec-mtcgToken", "admin-mtcgToken", "altenhof-mtcgToken");
-
-                if (validTokens.contains(extractedToken)) {
-                    return authHeader + extractedToken;
-                }
-            }
-
-            return null;
-
     }
 
     public void setPathname(String pathname) {
@@ -94,6 +79,8 @@ public class Request {
         this.pathParts = pathParts;
     }
 
-
+    public String getAuthorizationHeader() {
+        return "Authorization: " + headerMap.getHeader("Authorization");
+    }
 }
 

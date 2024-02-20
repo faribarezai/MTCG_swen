@@ -43,7 +43,7 @@ public class User {
         return elo;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
