@@ -38,16 +38,14 @@ public class UserRepository {
 
     //check User exists with name +psw for login
     public boolean userLogged(User user) {
-        System.out.println("I am in repo userlogged!!");
+
         String sql = "SELECT COUNT(*) FROM mUser WHERE username = ? AND password= ?";
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)){
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("search of user over!!");
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
-                System.out.println("Count of user: " +count);
                 return count >0;
             }
 
