@@ -28,7 +28,7 @@ public class UserService implements Service {
     @Override
     public Response handleRequest(Request request) {
         String route = request.getServiceRoute();
-        String uEndpoint=  "/users/" +user.getUsername();
+        //String uEndpoint=  "/users/" +user.getUsername();
 
         if ("/users".equals(route) && request.getMethod() == Method.POST) {
             return userController.registerUser(request);
@@ -38,7 +38,7 @@ public class UserService implements Service {
             return userController.loginUser(request);
         }
         //curl -i -X GET http://localhost:10001/users/kienboec --header "Authorization: Bearer kienboec-mtcgToken"
-        if (uEndpoint.equals(route) && request.getMethod() == Method.GET) {
+        if ("users/kienboec".equals(route) && request.getMethod() == Method.GET) {
             return userController.loginUser(request);
         }
 

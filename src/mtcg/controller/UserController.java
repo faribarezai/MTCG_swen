@@ -11,6 +11,7 @@ import mtcg.repository.UserRepository;
 public class UserController {
    // private UserService userService;
     private UserRepository userRepo=new UserRepository();
+    private User user;
     public UserController(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
@@ -55,7 +56,7 @@ public class UserController {
 
             User user = objectMapper.readValue(requestBody, User.class);
 
-            System.out.println("Received user registration request: " + user.getUsername() + ", " + user.getPassword() + ", " + user.getCoins() + ", " + user.getElo());
+           // System.out.println("Received user registration request: " + user.getUsername() + ", " + user.getPassword() + ", " + user.getCoins() + ", " + user.getElo());
 
             // Validate the request body
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
@@ -82,6 +83,15 @@ public class UserController {
         }
 
     }
+
+
+   public int acquirePackage() {
+
+        return 0;
+   }
+
+
+
 /*
     //User exists for registration?
     public boolean userExists(User user) {

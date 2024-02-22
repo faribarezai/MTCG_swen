@@ -11,6 +11,7 @@ import mtcg.model.Package;
 
 // other import statements...
 
+import mtcg.model.User;
 import mtcg.repository.PackageRepository;
 import mtcg.repository.UserRepository;
 import mtcg.service.PackageService;
@@ -20,11 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PackageController {
+    private static final int CARDS_PER_PACKAGE = 5;
+    private static final int COINS_PER_PACKAGE = 5;
     private PackageRepository packageRepo = new PackageRepository();
-    private Card card;
-    private List<Card> packages= new ArrayList<>();
+ private UserRepository userRepository= new UserRepository();
+    private List<Card> packages = new ArrayList<>();
 
-    public PackageController() {}
+    public PackageController() {
+    }
+
     public PackageController(PackageRepository packageRepo) {
         this.packageRepo = packageRepo;
     }
@@ -33,16 +38,22 @@ public class PackageController {
         return this.packages;
     }
 
+    public void updateUser(User user) {
+        userRepository.updateCoinOfUser(user);
+    }
+
+
     public Response createPackages(Request request) {
         try {
             // Parse the JSON body from the request
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<List<Card>>() {});
+            List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<List<Card>>() {
+            });
             List<Integer> cardIds = new ArrayList<>();
 
             for (Card card : cards) {
-               // System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
+                 System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
                 packageRepo.saveCard(card);
                 cardIds.add(card.getCardId());
             }
@@ -58,6 +69,55 @@ public class PackageController {
         }
 
     }
+
+    public Response acquirePackage(User username, Request request) {
+        try {
+            // Parse the JSON body from the request
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = request.getBody();
+            List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<List<Card>>() {
+            });
+
+            if (cards.size() != 5) {
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "No package");
+            }
+
+            // enough coins?
+            if (username.getCoins() < COINS_PER_PACKAGE) {
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy the package");
+            }
+            System.out.println("COOL How many coins do I have? " + username.getCoins());
+
+            if(!cards.isEmpty()) {
+                for (Card card : cards) {
+                    // add it to stack of user
+                    username.getStack().add(card);
+                }
+
+                for (Card c : username.getStack()) {
+                    System.out.println("Stack of user:  " + c.getCardId() + ", " + c.getName() + ", " + c.getDamage() + ", " + c.getElementType() + ", " + c.getCardType());
+                }
+
+                // update
+                username.setCoins(username.getCoins() - COINS_PER_PACKAGE);
+                updateUser(username);
+                return new Response(HttpStatus.OK, ContentType.JSON, "Package acquired successfully");
+            }
+
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough cards in the aquisition package!");
+
+        } catch (Exception e) {
+            // Handle the exception (e.g., invalid JSON format)
+            e.printStackTrace();
+           return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Nothing acquired for now");
+
+        }
+
+    }
+}
+
+
+
 
 
   /*  public void savePackage(Package pckg) {
@@ -114,4 +174,3 @@ public class PackageController {
             }
         }
 */
-}

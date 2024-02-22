@@ -7,91 +7,128 @@ import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
 import mtcg.controller.PackageController;
-import mtcg.model.Card;
 import mtcg.model.User;
+import mtcg.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PackageService implements Service {
     private static final int CARDS_PER_PACKAGE = 5;
     private static final int COINS_PER_PACKAGE = 5;
+    static UserRepository userRepository =  new UserRepository();
     private PackageController packageController;
 
 
     public PackageService(){this.packageController= new PackageController();}
 
-    public static Response buyPackage(User user) {
+    public boolean enoughMoney(User user) {
         // Check if the user has enough coins to buy a package
-        if (user.getCoins() < COINS_PER_PACKAGE) {
-            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy a package");
-        }
-
-        // Deduct coins from the user's account
-        user.deductCoins(COINS_PER_PACKAGE);
-
-        // Generate and return a package with 5 cards
-        List<Card> cards = generateCards();
-        //Package purchasedPackage = new Package(cards);
-
-        return new Response(HttpStatus.OK, ContentType.JSON, cards.toString());
-       // return new Response(HttpStatus.OK, ContentType.JSON, toJson(purchasedPackage));
+        return (user.getCoins() > COINS_PER_PACKAGE);
     }
-
-    private static List<Card> generateCards() {
-
-        //System.out.println("Id: " + card.getId() + "Name: " +card.getName() + ", Damage: " + card.getDamage());
-        List<Card> packageCards = new ArrayList<>();
-
-        // Implement the logic to process each card in the package
-        // For example, you can add each card to the user's deck, save them to the database, etc.
-        // Update the logic based on your requirements.
-        // Example: user.getDeck().addAll(packageCards);
-        for (Card card : packageCards) {
-            System.out.println("Processing card: " + card.getName() + " - Damage: " + card.getDamage());
-        }
-
-        return packageCards;
-    }
-
-    private static List<Card> retrieveCardsFromDatabase() {
-        // Implement the logic to retrieve cards from the database based on their IDs
-        // Example: return cardRepository.findByIdIn(cardIds);
-        return Collections.emptyList();
-    }
-
-
 
     @Override
     public Response handleRequest(Request request) {
         String route = request.getServiceRoute();
         String auth= request.getAuthorizationHeader();
-        System.out.println("authentication: " + auth);
 
+         System.out.println(auth);
+        System.out.println("route: " + route);
 
                 if ("/packages".equals(route) && request.getMethod() == Method.POST) {
-                    if(auth=="Authorization: Bearer admin-mtcgToken") {
+                    if(Objects.equals(auth, "Authorization: Bearer admin-mtcgToken")) {
+                        //System.out.println("Auth is OK!");
                         return packageController.createPackages(request);
                     }
                 }
                 //acquire packages kienboec
                 if ("/transactions/packages".equals(route) && request.getMethod() == Method.POST) {
-                    if(auth=="Authorization: Bearer altenhof-mtcgToken" ||
-                            auth=="Authorization: Bearer kienboec-mtcgToken" ) {
-                        return packageController.createPackages(request);
-                    }
-                    else return new Response(HttpStatus.UNAUTHORIZED, ContentType.JSON, "unauthorized User - Authentication failed!");
+
+                    return handlePackageAcquisition(auth, request);
                 }
+                    /*if(Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken") ||
+                            Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken")) { */
+                  /*  String username = extractUsernameFromAuthorizationHeader(auth);
+                    //System.out.println("Username extracted: " + username);
+                    if (username != null) {
+                        //create User
+                        User user = createUserFromUsername(username);
+                        //check if enough coins
+                      /*
+                        if(checkMoney(user)) {
+                            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy a package");
+
+                        }
+                        //update coins
+                        updateUser(user);
+                        */
+
+                        //return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy a package");
+                        //acquire it
+                    /*    return packageController.acquirePackage(user, request);
+                    }
+                    return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Username not extracted");
+                }
+*/
+                   // else return new Response(HttpStatus.UNAUTHORIZED, ContentType.JSON, "unauthorized User - Authentication failed!");
 
                 return new Response(HttpStatus.OK, ContentType.JSON, "Package operation successful");
 
-                // return new Response(HttpStatus.UNAUTHORIZED, ContentType.JSON, "Unauthorized request");
+
+    }
+
+
+    private Response handlePackageAcquisition(String auth,Request request) {
+        String username = extractUsernameFromAuthorizationHeader(auth);
+
+        if (username != null) {
+            User user = createUserFromUsername(username);
+
+            if (user != null) {
+                // Check if user has enough coins
+                /*if (!enoughMoney(user)) {
+                    return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy a package");
+                }*/
+                //Response acquisitionResponse = packageController.acquirePackage(user, request);
+                   // if(aquisitionResponse== Response(HttpStatus.OK, ContentType.JSON, "Package acquired successfully"))
+                  //      updateUser(user);
+
+                return packageController.acquirePackage(user, request);
+            } else {
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "User null");
+            }
+        }
+        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Username not extracted");
     }
 
 
 
+    private String extractUsernameFromAuthorizationHeader(String authHeader) {
+        // Assuming the format is "Authorization: Bearer username-mtcgToken"
+        //System.out.println("name: " + authHeader);
+        String[] parts = authHeader.split("\\s+");
+
+        if (parts.length == 3 && parts[0].equals("Authorization:") && parts[1].startsWith("Bearer")) {
+            String token = parts[2].trim();
+
+            // Assuming the username is everything before the first '-'
+            int dashIndex = token.indexOf('-');
+            if (dashIndex != -1) {
+             //   System.out.println("name extracted from authheader: " + token.substring(0, dashIndex));
+                return token.substring(0, dashIndex);
+            }
+        }
+        return null;
+    }
+
+    private User createUserFromUsername(String username) {
+        // Assuming you have an empty constructor in the User class
+       // UserRepository userRepository =  new UserRepository();
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            System.out.println ("User does not exist!");
+        }
+        return user;
+    }
 
 }
 

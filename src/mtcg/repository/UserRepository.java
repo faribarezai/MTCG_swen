@@ -1,10 +1,13 @@
 package mtcg.repository;
 
+import mtcg.model.Card;
 import mtcg.model.User;
 import mtcg.dal.DataAccessException;
 import mtcg.dal.UnitOfWork;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository {
 
@@ -73,19 +76,42 @@ public class UserRepository {
     }
 
 //Update User
-    public void updateUser(User user) {
-        String sql = "UPDATE mUser SET username = ?, password = ?, elo = ? WHERE userId = ?";
+    public void updateCoinOfUser(User user) {
+        String sql = "UPDATE mUser SET coins=? WHERE username = ?";
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getElo());
-            preparedStatement.setLong(4, user.getId());
-
+            preparedStatement.setInt(1, user.getCoins());
+            preparedStatement.setString(2, user.getUsername());
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new DataAccessException("Error updating User", e);
         }
     }
 
 
+    public User findByUsername(String username) {
+        String sql = "SELECT * FROM mUser WHERE username = ?";
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Extract user information from the result set
+                    int userId = resultSet.getInt("userId");
+                    String password = resultSet.getString("password");
+                    int elo = resultSet.getInt("elo");
+                    List<Card> deck = new ArrayList<>();
+                    List<Card> stack = new ArrayList<>();
+                    int coins = resultSet.getInt("coins");
+                    // Create and return a User object
+                    return new User(username, password, deck, stack,coins, elo);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error finding User by username", e);
+        }
+
+        // Return null if no user is found
+        return null;
+    }
 }

@@ -19,7 +19,24 @@ public class Request {
     private String body;
     private final String AUTHORIZATION = "Authorization: ";
 
-    public String getServiceRoute(){
+
+
+    public String getServiceRoute() {
+        if (this.pathParts == null || this.pathParts.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder routeBuilder = new StringBuilder('/');
+        for (String part : this.pathParts) {
+            routeBuilder.append('/').append(part);
+        }
+
+        return routeBuilder.toString();
+    }
+
+
+
+    /*  public String getServiceRoute(){
         if (this.pathParts == null ||
                 this.pathParts.isEmpty()) {
             return null;
@@ -27,7 +44,7 @@ public class Request {
 
         return '/' + this.pathParts.get(0);
     }
-
+*/
     public void setUrlContent(String urlContent) {
         this.urlContent = urlContent;
         Boolean hasParams = urlContent.contains("?");

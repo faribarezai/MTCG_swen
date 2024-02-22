@@ -18,33 +18,17 @@ public class Router {
 
 
     private void initializeRoute() {
-        //User Service
-        /*
-        serviceRegistry.put("/users", new UserService()); // controller oder service?
-
-        resolve("/users");
-        serviceRegistry.put("/sessions", new UserService());
-        serviceRegistry.put("/users/{username}", new UserService());
-
-        //CardService
-        serviceRegistry.put("/cards", new CardService());
-        serviceRegistry.put("/deck", new CardService());
-        serviceRegistry.put("/trading", new CardService());
-        serviceRegistry.put("/tradings/{ttid}",new CardService());
-        //PackageService
-        serviceRegistry.put("/packages", new PackageService());
-        serviceRegistry.put("/transactions/packages", new PackageService());
-       */
         Map<String, Service> routes = Map.of(
                 "/users", new UserService(),
                 "/sessions", new UserService(),
-                "/users/{username}", new UserService(),
+                "/packages", new PackageService(),
+                "/transactions/packages", new PackageService(),
                 "/cards", new CardService(),
                 "/deck", new CardService(),
+                "/users/{username}", new UserService(),
                 "/trading", new CardService(),
-                "/tradings/{ttid}", new CardService(),
-                "/packages", new PackageService(),
-                "/transactions/packages", new PackageService()
+                "/tradings/{ttid}", new CardService()
+
         );
 
         // Add routes and services to the serviceRegistry
@@ -61,40 +45,57 @@ public class Router {
     }
 
     public Service resolve(String route) {
-        return serviceRegistry.get(route);
-        /*
         for (Map.Entry<String, Service> serviceEntry : serviceRegistry.entrySet()) {
             String registeredRoute = serviceEntry.getKey();
             Service service = serviceEntry.getValue();
+           // System.out.println("registerRoute in resolve: " + registeredRoute);
             if (matchesRoute(route, registeredRoute)) {
                 return service;
             }
-
         }
+
         return null;
-        //return this.serviceRegistry.get(route);
     }
+
 
     private boolean matchesRoute(String inputRoute, String registeredRoute) {
         String[] inputParts = inputRoute.split("/");
         String[] registeredParts = registeredRoute.split("/");
 
-        if (inputRoute.length() != registeredParts.length) {
+        // look for prefix
+        if (registeredParts.length > inputParts.length) {
+            for (int i = 0; i < inputParts.length; i++) {
+                if (!inputParts[i].equals(registeredParts[i])) {
+                    return false;
+                }
+            }
+            // Check if the next part after the prefix is not empty
+            if (!registeredParts[inputParts.length].isEmpty()) {
+                return true;
+            }
+        }
+
+
+        if (inputParts.length != registeredParts.length) {
             return false;
         }
+
         for (int i = 0; i < inputParts.length; i++) {
+           // System.out.println("Comparing: " + inputParts[i] + " with " + registeredParts[i]);
             if (registeredParts[i].startsWith("{") && registeredParts[i].endsWith("}")) {
-                continue;
+                continue;  // Ignore placeholder segments
             }
             if (!inputParts[i].equals(registeredParts[i])) {
                 return false;
             }
         }
         return true;
-        */
     }
 
+
 }
+
+
 
 
 
