@@ -6,15 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Package {
-    private int id;
+    @Getter
+    private int pckgId;
     @Getter
     private List<Integer> cardIds;
 
-    public Package(List<Integer> card) {
+    public Package(int id, List<Integer> card) {
+        this.pckgId=id;
         this.cardIds= card;
+    }
 
+    public Package( List<Integer> card) {
+        this.cardIds= card;
     }
-    public List<Integer> getCardIds() {
-        return cardIds;
+
+    public Package(){}
+
+    public void setPckgId(int pckgId) {
+        this.pckgId = pckgId;
     }
+
 }

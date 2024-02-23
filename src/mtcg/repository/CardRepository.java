@@ -25,25 +25,11 @@ public class CardRepository {
             //preparedStatement.setInt(1, card.getUserId());
             preparedStatement.setString(1, card.getName());
             preparedStatement.setInt(2, card.getDamage());
-            preparedStatement.setString(3, String.valueOf(card.getElementType()));
+            preparedStatement.setString(3, String.valueOf(card.getElement()));
             preparedStatement.setString(4, String.valueOf(card.getCardType()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately
-        }
-    }
-
-    public void updateCard(Card card) {
-       // String sql = "UPDATE card SET cardId=?, name = ?, damage = ?, element = ?, cardType = ? WHERE cardId = ?";
-      //  System.out.println("I am in UpdateCard Method!! ");
-        String sql = "UPDATE card SET userId = ? WHERE cardId = ?";
-        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            System.out.println("SQL: " + preparedStatement.toString());  // Log SQL statement
-            preparedStatement.setInt(1, card.getUserId());
-            preparedStatement.setInt(2, card.getCardId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataAccessException("Error updating card", e);
         }
     }
 
@@ -83,13 +69,45 @@ public class CardRepository {
     }
 
 
-    public void updateCardByUserID(Card card, int uid) {
+    public List<Card> getCards() {
+        List<Card> cards = new ArrayList<>();
+        String sql = "SELECT * FROM card";
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                int cardId = resultSet.getInt("cardId");
+                int userId = resultSet.getInt("userId");
+                String name = resultSet.getString("name");
+                int damage = resultSet.getInt("damage");
+                String elementTypeStr = resultSet.getString("element");
+                String cardTypeStr = resultSet.getString("cardType");
 
+                // Convert elementTypeStr and cardTypeStr to corresponding enums
+                ElementType elementType = ElementType.valueOf(elementTypeStr);
+                CardType cardType = CardType.valueOf(cardTypeStr);
+
+                // Create a Card object and add it to your List<Card>
+                Card card = new Card(userId, name, damage, elementType, cardType);
+                card.setcardId(cardId);
+                cards.add(card);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle or log any exceptions that may occur
+        }
+
+        return cards;
+    }
+
+
+
+    public void updateCardByUserID(Card card, int uid) {
         String sql = "UPDATE card SET userId = ? WHERE cardId = ?";
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            card.setUserId(uid);
             preparedStatement.setInt(1, uid);
             preparedStatement.setInt(2, card.getCardId());
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new DataAccessException("Error updating card", e);
         }

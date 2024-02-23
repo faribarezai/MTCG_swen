@@ -5,7 +5,11 @@ import mtcg.model.Card;
 import mtcg.model.Package;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PackageRepository {
     private UnitOfWork unitOfWork = new UnitOfWork();
@@ -54,4 +58,53 @@ public class PackageRepository {
         }
         return false;
     }
+
+    public List<Integer> getAllCardIdsFromPackages() {
+        List<Integer> existingCardIds = new ArrayList<>();
+
+        String sql = "SELECT cardIds FROM package";
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Array cardIdsArray = resultSet.getArray("cardIds");
+
+                // Convert the array to a List<Integer>
+                List<Integer> cardIds = Arrays.asList((Integer[]) cardIdsArray.getArray());
+
+                existingCardIds.addAll(cardIds);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle or log any exceptions that may occur
+        }
+
+        return existingCardIds;
+    }
+
+    public List<Integer> getCardIdsFromPackagById(int id) {
+        List<Integer> existingCardIds = new ArrayList<>();
+
+        String sql = "SELECT cardIds FROM package WHERE pckgId=? ";
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);  // Set the value for the pckgId parameter
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Array cardIdsArray = resultSet.getArray("cardIds");
+
+                    // Convert the array to a List<Integer>
+                    List<Integer> cardIds = Arrays.asList((Integer[]) cardIdsArray.getArray());
+
+                    existingCardIds.addAll(cardIds);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle or log any exceptions that may occur
+        }
+
+        return existingCardIds;
+    }
+
+
+
 }

@@ -63,7 +63,7 @@ public class User {
        String ret="";
         ret = "Username: " + getUsername() + " coins: " + getCoins() + " elo: " + getElo() + "\n";
         for(Card c: this.stack)
-        ret += "cardId: "+ c.getCardId() + " name: "+ c.getName() + " damage: "+ c.getDamage() + " elementtype: " + c.getElementType() + " cardType: " +  c.getCardType() + "\n";
+        ret += "cardId: "+ c.getCardId() + " name: "+ c.getName() + " damage: "+ c.getDamage() + " elementtype: " + c.getElement() + " cardType: " +  c.getCardType() + "\n";
         return ret;
     }
 

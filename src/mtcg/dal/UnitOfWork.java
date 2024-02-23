@@ -1,6 +1,4 @@
 package mtcg.dal;
-import mtcg.dal.DatabaseManager;
-import mtcg.dal.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -31,10 +31,6 @@ public class CardService implements Service {
     public CardService() {}
     public CardService(Connection con){}
 
-    public void updateCard(Card card) {
-        // Add business logic related to updating a card (if needed)
-        cardRepository.updateCard(card);
-    }
 
     @Override
     public Response handleRequest(Request request) {

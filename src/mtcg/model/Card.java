@@ -1,5 +1,6 @@
 package mtcg.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
@@ -10,6 +11,7 @@ public class Card{
     private int userId;
     private String name;
     private int damage;
+    @Getter
     private ElementType element;
     @Getter
     private CardType cardType;
@@ -24,8 +26,8 @@ public class Card{
         this.cardType=ct;
 
     }
-
-    public ElementType getElementType() { return element;}
+   // @JsonProperty("element")
+   // public ElementType getElementType() { return element;}
 
     public void setcardId(int cardId) {
         this.cardId=cardId;

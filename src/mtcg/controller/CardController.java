@@ -21,19 +21,23 @@ public class CardController {
 
 
     public Response showAllCards(User user, Request request) {
-
-        //System.out.println("Username: " + user.getUsername() + " userid: "+ user.getId() + " elo: " + user.getElo() +" coins: " + user.getCoins());
-
-       // cardRepo.updateCard(card);
-
-        List<Card> cards = cardRepo.getAllCards(user.getId());
+       List<Card> cards = cardRepo.getAllCards(user.getId());
         System.out.println("in showAllCards!! ");
+        for (Card card : cards) {
+            System.out.println("Cardid: " + card.getCardId() + ", userid: "  + card.getUserId() +
+                    ", name: " + card.getName() + ", damage: " + card.getDamage() + ", element: " + card.getElement() +
+                    ", CardType: " + card.getCardType());
+        }
+
+        System.out.println("cardId: " +  " Userid: " + user.getUsername() + " userid: "+ user.getId() + " elo: " + user.getElo() +" coins: " + user.getCoins());
 
         // Convert the list of cards to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String cardsJson;
         try {
             cardsJson = objectMapper.writeValueAsString(cards);
+            cardsJson = cardsJson.replaceAll("\\},", "},\n");
+
             System.out.println("im try Block!! ");
         } catch (JsonProcessingException ex) {
             System.out.println("JSON Exception!! ");

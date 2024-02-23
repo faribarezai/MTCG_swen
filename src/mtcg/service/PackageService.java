@@ -86,6 +86,7 @@ public class PackageService implements Service {
     }
 
     private User createUserFromUsername(String username) {
+        // look for user in db if exists
         User user = userRepository.findByUsername(username);
         if (user == null) {
             System.out.println ("User does not exist!");
