@@ -12,20 +12,18 @@ import mtcg.model.Package;
 // other import statements...
 
 import mtcg.model.User;
+import mtcg.repository.CardRepository;
 import mtcg.repository.PackageRepository;
 import mtcg.repository.UserRepository;
-import mtcg.service.PackageService;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PackageController {
-    private static final int CARDS_PER_PACKAGE = 5;
     private static final int COINS_PER_PACKAGE = 5;
     private PackageRepository packageRepo = new PackageRepository();
- private UserRepository userRepository= new UserRepository();
-    private List<Card> packages = new ArrayList<>();
+     private UserRepository userRepository= new UserRepository();
+    private CardRepository cardRepo= new CardRepository();
 
     public PackageController() {
     }
@@ -34,13 +32,10 @@ public class PackageController {
         this.packageRepo = packageRepo;
     }
 
-    public List<Card> getPackage() {
-        return this.packages;
-    }
-
     public void updateUser(User user) {
         userRepository.updateCoinOfUser(user);
     }
+    public void updateUserID(Card card, int uid) {cardRepo.updateCardByUserID(card, uid);}
 
 
     public Response createPackages(Request request) {
@@ -54,18 +49,18 @@ public class PackageController {
 
             for (Card card : cards) {
                  System.out.println("Received card registration request: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
-                packageRepo.saveCard(card);
+                cardRepo.saveCard(card);
                 cardIds.add(card.getCardId());
             }
             Package pckg = new Package(cardIds);
             packageRepo.savePackage(pckg);
 
-            return new Response(HttpStatus.CREATED, ContentType.JSON, "Card was added successfully");
+            return new Response(HttpStatus.CREATED, ContentType.JSON, "Package created successfully \n");
 
         } catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)
             e.printStackTrace();
-            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body");
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
         }
 
     }
@@ -75,41 +70,60 @@ public class PackageController {
             // Parse the JSON body from the request
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<List<Card>>() {
+            List<Card> cards = objectMapper.readValue(requestBody, new TypeReference<>() {
             });
 
+            System.out.println("Username: " + username.getUsername() + " userid: "+ username.getId() + " elo: " + username.getElo() +" coins: " + username.getCoins());
+
             if (cards.size() != 5) {
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "No package");
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "No package \n");
             }
 
             // enough coins?
             if (username.getCoins() < COINS_PER_PACKAGE) {
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy the package");
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough coins to buy the package \n");
             }
-            System.out.println("COOL How many coins do I have? " + username.getCoins());
+
+            //System.out.println("COOL How many coins do I have? " + username.getCoins());
 
             if(!cards.isEmpty()) {
                 for (Card card : cards) {
+                    System.out.println("Processing Card: " + card.getCardId() + ", " + card.getName() + ", " + card.getDamage() + ", " + card.getElementType() + ", " + card.getCardType());
                     // add it to stack of user
-                    username.getStack().add(card);
-                }
+                    username.addCardToStack(card);
+                    updateUserID(card, username.getId());
 
-                for (Card c : username.getStack()) {
-                    System.out.println("Stack of user:  " + c.getCardId() + ", " + c.getName() + ", " + c.getDamage() + ", " + c.getElementType() + ", " + c.getCardType());
+                    /*try {
+        // add it to stack of user
+        username.addCardToStack(card);
+        // update the userId for the card
+        updateUserID(card, username.getId());
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Handle the exception appropriately
+    }*/
+
                 }
+/*
+                for (Card c : username.getStack()) {
+
+                    System.out.println("Stack of user:  " + c.getCardId() + ", " + c.getName() + ", " + c.getDamage() + ", " + c.getElementType() + ", " + c.getCardType());
+                }*/
 
                 // update
                 username.setCoins(username.getCoins() - COINS_PER_PACKAGE);
                 updateUser(username);
-                return new Response(HttpStatus.OK, ContentType.JSON, "Package acquired successfully");
+                //set userid in card class in db
+                //updateUserID(card, username.getId());
+                return new Response(HttpStatus.OK, ContentType.JSON, "Package acquired successfully \n");
             }
 
-            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough cards in the aquisition package!");
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Not enough cards in the aquisition package! \n");
 
         } catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)
             e.printStackTrace();
-           return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Nothing acquired for now");
+           return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Nothing acquired for now \n");
 
         }
 

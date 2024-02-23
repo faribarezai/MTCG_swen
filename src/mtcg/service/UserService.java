@@ -45,6 +45,6 @@ public class UserService implements Service {
 
 
         // Handle other routes and methods as needed
-        return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful");
+        return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful \n");
     }
 }

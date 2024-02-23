@@ -27,15 +27,15 @@ public class UserController {
             User user = objectMapper.readValue(requestBody, User.class);
 
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body for login");
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body for logi \n");
             }
 
             // Check if the user already exists
 
             if (userRepo.userLogged(user)){
-                return new Response(HttpStatus.OK, ContentType.JSON, "User logged in successfully");
+                return new Response(HttpStatus.OK, ContentType.JSON, "User logged in successfully \n");
             }else
-                return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User does not exist");
+                return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User does not exist \n");
 
 
         } catch (Exception e) {
@@ -62,24 +62,24 @@ public class UserController {
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
                // System.out.println("Check if user registration request is valid in registerUSer(): " + user.getUsername() + ", " + user.getPassword());
 
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "username or password wrong");
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "username or password wrong \n");
             }
             // Check if the user already exists
             if (userRepo.userExists(user)) {
                 //System.out.println(user.getUsername() + " User with same username already registered");
-                return new Response(HttpStatus.CONFLICT, ContentType.JSON, "User with same username already registered");
+                return new Response(HttpStatus.CONFLICT, ContentType.JSON, "User with same username already registered \n");
             }
              else {
                 // Save user to the database
                 userRepo.saveUser(user);
-                return new Response(HttpStatus.CREATED, ContentType.JSON, "User successfully created");
+                return new Response(HttpStatus.CREATED, ContentType.JSON, "User successfully created \n");
             }
 
 
         } catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)
             e.printStackTrace();
-            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body");
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
         }
 
     }

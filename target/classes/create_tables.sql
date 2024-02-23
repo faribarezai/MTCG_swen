@@ -21,7 +21,10 @@ CREATE TABLE IF NOT EXISTS mUser (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     coins INT DEFAULT 20,
-    elo INT DEFAULT 100
+    elo INT DEFAULT 100,
+    bio VARCHAR(255),
+    image VARCHAR(255),
+    changeName VARCHAR(255)
     );
 
 ALTER TABLE mUser
@@ -30,14 +33,17 @@ ALTER TABLE mUser
 -- Card Table
 CREATE TABLE IF NOT EXISTS card (
     cardId SERIAL PRIMARY KEY,
+    userId INT,
     name VARCHAR(255) NOT NULL,
     damage INT NOT NULL,
     element elementtype NOT NULL,
-    cardType cardtype NOT NULL
+    cardType cardtype NOT NULL,
+    FOREIGN KEY (userId) REFERENCES mUser(userId)
     );
 
 ALTER TABLE card
-    owner TO postgres;
+ADD CONSTRAINT fk_card_user FOREIGN KEY (userId) REFERENCES mUser(userId);
+
 
 -- Package Table
 CREATE TABLE IF NOT EXISTS package (

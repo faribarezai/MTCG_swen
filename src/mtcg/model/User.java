@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 public class User {
-    private int id;
+    private int userId;
     @Getter
     private String username;
     @Getter
@@ -44,55 +44,31 @@ public class User {
     }
 
     public int getId() {
-        return id;
-    }
-
-    public void deductCoins(int coinsPerPackage) {
-        this.coins = getCoins() - coinsPerPackage;
+        return userId;
     }
 
     public void setElo(int i) {
         elo = i;
     }
+
+    public void addCardToStack(Card card) {
+        stack.add(card);
+    }
+    public void addCardToDeck(Card card) {
+        deck.add(card);
+    }
+
+
+    public String print() {
+       String ret="";
+        ret = "Username: " + getUsername() + " coins: " + getCoins() + " elo: " + getElo() + "\n";
+        for(Card c: this.stack)
+        ret += "cardId: "+ c.getCardId() + " name: "+ c.getName() + " damage: "+ c.getDamage() + " elementtype: " + c.getElementType() + " cardType: " +  c.getCardType() + "\n";
+        return ret;
+    }
+
+    public void setUserId(int userId) {
+        this.userId=userId;
+    }
 }
-
-    /*
-    // logic already implemented in UserService
-    //select 4 Cards for Battle
-    public List<Card> selectDeckCards(List<Card> card) {
-        // put in deck 4 Cards (only the best ones)
-        // Sort the cards in descending order of damage
-        card.sort(Comparator.comparingInt(Card::getDamage).reversed());
-
-        // Add the top 4 cards with the highest damage to the deck
-        for (int i = 0; i < Math.min(card.size(), 4); i++) {
-            deck.add(card.get(i));
-        }
-        return deck;
-    }
-
-    public void requestBattle() {
-    // request to server with current deck
-    }
-
-    public void buyPackage(int coins) {
-
-    }
-    public void compareStats(Player opponent) {
-        // comparing stats of yours and opponent
-        System.out.println("Comparing stats: ");
-        System.out.println(this.getUsername() + ": " + this.ELOvalue + "Elo, ");
-        System.out.println(opponent.getUsername() + ": " + opponent.ELOvalue + "Elo, ");
-
-        //opponent.getScoreboard();
-    }
-
-    //return sorted List
-    public List<Integer>sortScoreBoard() {
-        scoreboard= getScoreboard();
-        return scoreboard.stream().sorted().toList();
-    }
-    }
-
-*/
 

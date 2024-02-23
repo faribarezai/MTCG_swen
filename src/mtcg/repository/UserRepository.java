@@ -1,5 +1,7 @@
 package mtcg.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mtcg.model.Card;
 import mtcg.model.User;
 import mtcg.dal.DataAccessException;
@@ -104,7 +106,10 @@ public class UserRepository {
                     List<Card> stack = new ArrayList<>();
                     int coins = resultSet.getInt("coins");
                     // Create and return a User object
-                    return new User(username, password, deck, stack,coins, elo);
+                    User user = new User(username, password, deck, stack, coins, elo);
+                    user.setUserId(userId); // Set the retrieved userId
+
+                    return user;
                 }
             }
         } catch (SQLException e) {
@@ -113,5 +118,30 @@ public class UserRepository {
 
         // Return null if no user is found
         return null;
+    }
+
+    public void updateUser(User user) {
+        String sql = "UPDATE mUser SET stack = ? WHERE username = ?";
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            // Assuming 'stack' is a List<Card> and you have a method to serialize it to an appropriate format
+            String serializedStack = serializeStack(user.getStack());
+
+            preparedStatement.setString(1, serializedStack);
+            preparedStatement.setString(2, user.getUsername());
+            // Execute the update
+            preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+            throw new DataAccessException("Error finding User by username", e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    private String serializeStack(List<Card> stack) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(stack);
     }
 }

@@ -16,6 +16,7 @@ curl -i -X POST http://localhost:10001/users --header "Content-Type: application
 echo.
 curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"username\":\"admin\", \"password\":\"istrator\", \"coins\":20, \"elo\":80}"
 echo.
+echo.
 
 
 
@@ -35,7 +36,7 @@ curl -i -X POST http://localhost:10001/sessions --header "Content-Type: applicat
 echo.
 curl -i -X POST http://localhost:10001/sessions --header "Content-Type: application/json" -d "{\"username\":\"admin\",    \"password\":\"istrator\"}"
 echo.
-
+echo.
 
 
 echo should fail:
@@ -114,6 +115,7 @@ echo.
 REM --------------------------------------------------
 echo 8) show all acquired cards kienboec
 curl -i -X GET http://localhost:10001/cards --header "Authorization: Bearer kienboec-mtcgToken"
+echo.
 echo should fail (no token)
 curl -i -X GET http://localhost:10001/cards
 echo.

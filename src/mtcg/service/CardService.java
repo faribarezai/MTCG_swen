@@ -7,17 +7,25 @@ import httpserver.http.Method;
 import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
+import mtcg.controller.CardController;
 import mtcg.model.Card;
+import mtcg.model.User;
 import mtcg.repository.CardRepository;
+import mtcg.repository.UserRepository;
 
 import java.sql.Connection;
+import java.util.Objects;
+
+import static mtcg.service.PackageService.userRepository;
 
 public class CardService implements Service {
 
-    private CardRepository cardRepository = null;
+    private CardRepository cardRepository;
+    static UserRepository userRepository =  new UserRepository();
+    private CardController cardController= new CardController();
 
-    public CardService(CardRepository cardRepository) {
-        this.cardRepository = cardRepository;
+    public CardService(CardController cardController) {
+        this.cardController = cardController;
     }
 
     public CardService() {}
@@ -31,15 +39,71 @@ public class CardService implements Service {
     @Override
     public Response handleRequest(Request request) {
     String route = request.getServiceRoute();
+    String auth= request.getAuthorizationHeader();
+        System.out.println(auth);
+        System.out.println("route: " + route);
 
+    //curl -i -X GET http://localhost:10001/cards --header "Authorization: Bearer kienboec-mtcgToken"
         if ("/cards".equals(route) && request.getMethod() == Method.GET) {
-        //return cardController.aquireCard(request);
-    }
+            if (Objects.equals(auth, "Authorization: Bearer admin-mtcgToken") ||
+                    Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken") ||
+                    Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken")) {
+                return displayCard(auth, request);
+                //return cardController.showAllCards(request);
+            }
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "No Authentication Token! \n");
+        }
+
         if ("/deck".equals(route) && request.getMethod() == Method.GET) {
-       // return cardController.configureDeck(request);
+             return cardController.configureDeck(request);
     }
     // Handle other routes and methods as needed
-        return new Response(HttpStatus.OK, ContentType.JSON, "handle Card process successful");
+        return new Response(HttpStatus.OK, ContentType.JSON, "handle Card process successful \n");
 }
-    // Add other methods for card-related business logic as needed
+
+    private Response displayCard(String auth,Request request) {
+        String username = extractUsernameFromAuthorizationHeader(auth);
+        System.out.println(" i am in displayCard ");
+        if (username != null) {
+            User user = createUserFromUsername(username);
+
+            if (user != null) {
+               // System.out.println(" i am in displayCardhandle ");
+                //show cards when user exists
+                return cardController.showAllCards(user, request);
+            } else {
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "User null \n");
+            }
+        }
+        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Username not extracted \n");
+    }
+
+    private String extractUsernameFromAuthorizationHeader(String authHeader) {
+        // Assuming the format is "Authorization: Bearer username-mtcgToken"
+        String[] parts = authHeader.split("\\s+");
+
+        if (parts.length == 3 && parts[0].equals("Authorization:") && parts[1].startsWith("Bearer")) {
+            String token = parts[2].trim();
+
+            // Assuming the username is everything before the first '-'
+            int dashIndex = token.indexOf('-');
+            if (dashIndex != -1) {
+                //   System.out.println("name extracted from authheader: " + token.substring(0, dashIndex));
+                return token.substring(0, dashIndex);
+            }
+        }
+        return null;
+    }
+
+    private User createUserFromUsername(String username) {
+        // Assuming you have an empty constructor in the User class
+        // UserRepository userRepository =  new UserRepository();
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            System.out.println ("User does not exist!");
+        }
+        return user;
+    }
+
+
 }

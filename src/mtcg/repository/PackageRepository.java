@@ -35,21 +35,6 @@ public class PackageRepository {
         }
     }
 
-
-    public void saveCard(Card card) {
-        String sql = "INSERT INTO card (cardId, name, damage, element, cardType) VALUES (?, ?, ?, CAST(? AS elementtype), CAST(? AS cardtype))";
-        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            preparedStatement.setInt(1, card.getCardId());
-            preparedStatement.setString(2, card.getName());
-            preparedStatement.setInt(3, card.getDamage());
-            preparedStatement.setString(4, String.valueOf(card.getElementType()));
-            preparedStatement.setString(5, String.valueOf(card.getCardType()));
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
-        }
-    }
-
     private boolean cardIdsExist(Connection connection, List<Integer> cardIds) {
         String sql = "SELECT COUNT(*) FROM package WHERE cardIds @> ?::integer[]";
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {

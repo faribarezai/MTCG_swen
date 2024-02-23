@@ -31,6 +31,7 @@ public class Response {
                 "Content-Type: " + this.contentType + "\r\n" +
                 "Content-Length: " + this.content.length() + "\r\n" +
                 "\r\n" +
-                this.content;
+                this.content +
+                "\r\n";
     }
 }
