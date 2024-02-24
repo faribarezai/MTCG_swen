@@ -57,7 +57,7 @@ public class CardRepository {
 
                     // Create a Card object and add it to your List<Card>
                     Card card = new Card(userid, name, damage, elementType, cardType);
-                    card.setcardId(cardId);
+                    card.setCardId(cardId);
                     cards.add(card);
                 }
             }   return cards;
@@ -88,7 +88,7 @@ public class CardRepository {
 
                 // Create a Card object and add it to your List<Card>
                 Card card = new Card(userId, name, damage, elementType, cardType);
-                card.setcardId(cardId);
+                card.setCardId(cardId);
                 cards.add(card);
             }
         } catch (SQLException e) {

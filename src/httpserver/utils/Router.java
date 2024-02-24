@@ -25,6 +25,7 @@ public class Router {
                 "/transactions/packages", new PackageService(),
                 "/cards", new CardService(),
                 "/deck", new CardService(),
+                "/deck?format=plain", new CardService(),
                 "/users/{username}", new UserService(),
                 "/trading", new CardService(),
                 "/tradings/{ttid}", new CardService()

@@ -28,8 +28,24 @@ public class Request {
         }
 
         StringBuilder routeBuilder = new StringBuilder('/');
+        boolean inPathParameter = false;
+
         for (String part : this.pathParts) {
-            routeBuilder.append('/').append(part);
+            if (inPathParameter) {
+                // Handle path parameter
+                routeBuilder.append("{").append(part).append("}");
+                inPathParameter = false;
+            } else if (part.startsWith("{") && part.endsWith("}") && routeBuilder.length() == 1) {
+                // Handle the case "/{parameter}" at the beginning of the path
+                routeBuilder.append("{").append(part.substring(1, part.length() - 1)).append("}");
+            } else {
+                routeBuilder.append('/').append(part);
+            }
+        }
+
+
+        if (this.params != null) {
+            routeBuilder.append('?').append(this.params);
         }
 
         return routeBuilder.toString();
@@ -91,5 +107,8 @@ public class Request {
     }
 
 
+    public void setServiceRoute(String route) {
+        this.pathname=route;
+    }
 }
 

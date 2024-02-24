@@ -10,6 +10,9 @@ import mtcg.model.User;
 import mtcg.repository.UserRepository;
 import mtcg.service.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserController {
      private UserService userService;
     private UserRepository userRepo = new UserRepository();
@@ -65,7 +68,7 @@ public class UserController {
             // Parse the JSON body from the request
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            System.out.println("Request body in User: " + requestBody);
+            //System.out.println("Request body in User: " + requestBody);
 
             User user = objectMapper.readValue(requestBody, User.class);
 
@@ -92,5 +95,24 @@ public class UserController {
             return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
         }
 
+    }
+
+    public Response editUserData(String username, Request request) {
+
+
+        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
+    }
+
+
+    public Response getUserData(String username,Request request) {
+
+        User user = new User();
+        user= userRepo.findByUsername(username);
+
+        System.out.println("Username: " + user.getUsername() + "coins: " + user.getCoins() +"Elo: " + user.getElo() +
+                "Bio: " + user.getBio());
+
+
+        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
     }
 }

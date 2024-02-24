@@ -29,7 +29,7 @@ public class Card{
    // @JsonProperty("element")
    // public ElementType getElementType() { return element;}
 
-    public void setcardId(int cardId) {
+    public void setCardId(int cardId) {
         this.cardId=cardId;
     }
 

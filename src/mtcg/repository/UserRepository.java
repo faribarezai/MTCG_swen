@@ -51,6 +51,7 @@ public class UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
+                System.out.println("User count in database: " + count);
                 return count >0;
             }
 

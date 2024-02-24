@@ -3,6 +3,7 @@ import httpserver.utils.Router;
 import mtcg.dal.DatabaseManager;
 import mtcg.model.Card;
 import mtcg.model.User;
+import mtcg.service.CardService;
 import mtcg.service.UserService;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Main {
             server.start();
 
             UserService userService = new UserService();
+            CardService cardService= new CardService();
 
         } catch (Exception e) {
             // Handle initialization failures

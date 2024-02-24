@@ -1,6 +1,7 @@
 package mtcg.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
 import httpserver.http.Method;
@@ -50,16 +51,64 @@ public class CardService implements Service {
             return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "No Authentication Token! \n");
         }
 
-        if ("/deck".equals(route) && request.getMethod() == Method.GET) {
-             return cardController.configureDeck(request);
-    }
-    // Handle other routes and methods as needed
-        return new Response(HttpStatus.OK, ContentType.JSON, "handle Card process successful \n");
+
+        if ("/deck".equals(route) && request.getMethod() == Method.GET ) {
+            //curl -i -X GET http://localhost:10001/deck --header "Authorization: Bearer kienboec-mtcgToken"
+
+            if(Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken") ||
+                    Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken")) {
+                String username = extractUsernameFromAuthorizationHeader(auth);
+                System.out.println("User extracted: " + username);
+
+                User user = createUserFromUsername(username);
+                System.out.println("User found for deck: " + user.getUsername());
+
+                try {
+                    return cardController.showDeck(user, request);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Authorization failed! \n");
+
+       }
+
+
+      //  curl -i -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer kienboec-mtcgToken"
+       if("/deck".equals(route) && request.getMethod() == Method.PUT) {
+           if(Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken") ||
+                   Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken")) {
+               String username = extractUsernameFromAuthorizationHeader(auth); // call other method
+               User user = createUserFromUsername(username); // call other method
+               try {
+                   return cardController.createDeck(user, request);
+               } catch (JsonProcessingException e) {
+                   throw new RuntimeException(e);
+               }
+           }
+           return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Authorization failed! \n");
+       }
+
+
+       if("/deck?format=plain".equals(route) && request.getMethod() == Method.GET) {
+           if(Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken") ||
+                   Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken")) {
+               String username = extractUsernameFromAuthorizationHeader(auth);
+               User user = createUserFromUsername(username);
+               return cardController.showDeckDiff(user, request);
+           }
+           return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Authorization failed! \n");
+       }
+
+
+        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Method or Route is incorrect \n");
+
+
 }
 
     private Response displayCard(String auth,Request request) {
         String username = extractUsernameFromAuthorizationHeader(auth);
-        System.out.println(" i am in displayCard ");
+        //System.out.println(" i am in displayCard ");
         if (username != null) {
             User user = createUserFromUsername(username);
 

@@ -20,6 +20,12 @@ public class User {
     @Getter
     private int elo = 100;
     @Getter
+    private String bio;
+    @Getter
+    private String image;
+    @Getter
+    private String changename;
+    @Getter
     List<Integer> scoreboard;// shall be in battlelogic
 
     public User(String username, String password, List<Card> deck, List<Card> stack, int coins, int elo) {
@@ -56,15 +62,6 @@ public class User {
     }
     public void addCardToDeck(Card card) {
         deck.add(card);
-    }
-
-
-    public String print() {
-       String ret="";
-        ret = "Username: " + getUsername() + " coins: " + getCoins() + " elo: " + getElo() + "\n";
-        for(Card c: this.stack)
-        ret += "cardId: "+ c.getCardId() + " name: "+ c.getName() + " damage: "+ c.getDamage() + " elementtype: " + c.getElement() + " cardType: " +  c.getCardType() + "\n";
-        return ret;
     }
 
     public void setUserId(int userId) {
