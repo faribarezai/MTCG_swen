@@ -33,5 +33,10 @@ public class HeaderMap {
         headers.put("Authorization", authorizationHeader);
     }
 
+    public void setHeader(String s, String contentType) {
+        headers.put(s, contentType);
+
+    }
+
 }
 

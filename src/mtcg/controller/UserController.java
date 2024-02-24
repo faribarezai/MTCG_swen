@@ -1,5 +1,6 @@
 package mtcg.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
@@ -7,9 +8,10 @@ import httpserver.server.Request;
 import httpserver.server.Response;
 import mtcg.model.User;
 import mtcg.repository.UserRepository;
+import mtcg.service.UserService;
 
 public class UserController {
-    // private UserService userService;
+     private UserService userService;
     private UserRepository userRepo = new UserRepository();
     private User user;
 
@@ -20,6 +22,10 @@ public class UserController {
     public UserController() {
     }
 
+    // Constructor for testing, accepts a UserService
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
     //Login User
     public Response loginUser(Request request) {
         try {
@@ -27,12 +33,18 @@ public class UserController {
             String requestBody = request.getBody();
             User user = objectMapper.readValue(requestBody, User.class);
 
+            try {
+                user = objectMapper.readValue(requestBody, User.class);
+            } catch (JsonParseException e) {
+                // If parsing fails, return a Bad Request response
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid JSON format \n");
+            }
+
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body for logi \n");
+                return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Username or password empty \n");
             }
 
             // Check if the user already exists
-
             if (userRepo.userLogged(user)) {
                 return new Response(HttpStatus.OK, ContentType.JSON, "User logged in successfully \n");
             } else
@@ -56,8 +68,6 @@ public class UserController {
             System.out.println("Request body in User: " + requestBody);
 
             User user = objectMapper.readValue(requestBody, User.class);
-
-            // System.out.println("Received user registration request: " + user.getUsername() + ", " + user.getPassword() + ", " + user.getCoins() + ", " + user.getElo());
 
             // Validate the request body
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {

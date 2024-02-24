@@ -2,15 +2,20 @@ package httpserver.server;
 
 import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
+import lombok.Getter;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Response {
+    @Getter
     private int status;
+    @Getter
     private String message;
+    @Getter
     private String contentType;
+    @Getter
     private String content;
 
     public Response(HttpStatus httpStatus, ContentType contentType, String content) {
@@ -19,6 +24,7 @@ public class Response {
         this.contentType = contentType.type;
         this.content = content;
     }
+
 
     public String get() {
 

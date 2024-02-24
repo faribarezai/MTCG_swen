@@ -1,5 +1,6 @@
 package httpserver.server;
 
+import httpserver.http.ContentType;
 import httpserver.http.Method;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,17 +35,6 @@ public class Request {
         return routeBuilder.toString();
     }
 
-
-
-    /*  public String getServiceRoute(){
-        if (this.pathParts == null ||
-                this.pathParts.isEmpty()) {
-            return null;
-        }
-
-        return '/' + this.pathParts.get(0);
-    }
-*/
     public void setUrlContent(String urlContent) {
         this.urlContent = urlContent;
         Boolean hasParams = urlContent.contains("?");
@@ -99,5 +89,7 @@ public class Request {
     public String getAuthorizationHeader() {
         return "Authorization: " + headerMap.getHeader("Authorization");
     }
+
+
 }
 
