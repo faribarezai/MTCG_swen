@@ -62,9 +62,7 @@ public class UserService implements Service {
         if("/users/kienboec".equals(route) && request.getMethod() == Method.PUT ||
                 "/users/altenhof".equals(route) && request.getMethod() == Method.PUT) {
             String username= extractUsername(route);
-            System.out.println("Username: " + username);
 
-            String expectedAuthFormat= "Authorization: Bearer " + username + "-mtcgToken";
             //if(auth!=null && auth.equals(expectedAuthFormat)) {
               if(auth !=null && auth.contains(username)){
                 return userController.editUserData(username, request);
@@ -72,6 +70,21 @@ public class UserService implements Service {
 
             return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Wrong Authentication Token! \n");
         }
+
+        //curl -X GET http://localhost:10001/stats --header "Authorization: Bearer kienboec-mtcgToken"
+        if("/stats".equals(route) && request.getMethod() == Method.GET){
+            if(Objects.equals(auth, "Authorization: Bearer admin-mtcgToken")) {
+                String username= extractUsername(auth);
+
+                System.out.println("Stats of: " + username);
+                return userController.getUserStats(username);
+
+            }
+         return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "mismatch Authentication Token! \n");
+
+        }
+
+
 
         // when all IFs fail
         return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful \n");

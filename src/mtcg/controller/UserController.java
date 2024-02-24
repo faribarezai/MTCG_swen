@@ -11,11 +11,8 @@ import mtcg.model.User;
 import mtcg.repository.UserRepository;
 import mtcg.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserController {
-     private UserService userService;
+    private UserService userService;
     private UserRepository userRepo = new UserRepository();
     private User user;
 
@@ -26,7 +23,7 @@ public class UserController {
     public UserController() {
     }
 
-    // Constructor for testing, accepts a UserService
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -35,7 +32,7 @@ public class UserController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            User user = objectMapper.readValue(requestBody, User.class);
+          //  User user;
 
             try {
                 user = objectMapper.readValue(requestBody, User.class);
@@ -69,21 +66,20 @@ public class UserController {
             // Parse the JSON body from the request
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = request.getBody();
-            //System.out.println("Request body in User: " + requestBody);
 
             User user = objectMapper.readValue(requestBody, User.class);
 
             // Validate the request body
             if (user.getUsername() == null || user.getPassword() == null || user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-                // System.out.println("Check if user registration request is valid in registerUSer(): " + user.getUsername() + ", " + user.getPassword());
 
                 return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "username or password wrong \n");
             }
             // Check if the user already exists
             if (userRepo.userExists(user)) {
-                //System.out.println(user.getUsername() + " User with same username already registered");
                 return new Response(HttpStatus.CONFLICT, ContentType.JSON, "User with same username already registered \n");
-            } else {
+            }
+
+            else {
                 // Save user to the database
                 userRepo.saveUser(user);
                 return new Response(HttpStatus.CREATED, ContentType.JSON, "User successfully created \n");
@@ -107,19 +103,15 @@ public class UserController {
 
             User updatedUser = objectMapper.readValue(requestBody, User.class);
 
-            System.out.println("updateduser bio: "+updatedUser.getUsername());
-            System.out.println("updateduser bio: "+updatedUser.getBio());
-            System.out.println("updateduser image: "+updatedUser.getImage());
-            System.out.println("updateduser changename: "+updatedUser.getChangename());
-            System.out.println("user: "+user.getUsername());
-            System.out.println("user: "+user.getBio());
+           // System.out.println("updateduser bio: "+updatedUser.getUsername());
 
             user.setBio(updatedUser.getBio());
             user.setImage(updatedUser.getImage());
             user.setChangename(updatedUser.getChangename());
 
-            System.out.println("username: "+ user.getUsername() + ", " + user.getBio()+ ", "+ user.getImage() +", " + user.getChangename());
+            //System.out.println("username: "+ user.getUsername() + ", " + user.getBio()+ ", "+ user.getImage() +", " + user.getChangename());
 
+            //update it in db
             userRepo.updateUserData(user);
 
             return new Response(HttpStatus.OK, ContentType.JSON, "User Data updated! \n" ); //+objectMapper.writeValueAsString(user) + " \n");
@@ -136,6 +128,7 @@ public class UserController {
     public Response getUserData(String username) {
 
         User user = userRepo.findByUsername(username);
+        //System.out.println("username: "+ user.getUsername() + ", " + user.getCoins()+ ", "+ user.getElo() +", " + user.getChangename());
 
         if (user != null) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -147,10 +140,41 @@ public class UserController {
                 throw new RuntimeException(e);
             }
 
+          //  System.out.println("username: "+ user.getUsername() + ", " + user.getCoins()+ ", "+ user.getElo() +", " + user.getChangename());
+
             return new Response(HttpStatus.OK, ContentType.JSON, userJson + "\n");
         } else {
             return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User not found\n");
         }
     }
 
+    public Response getUserStats(String username) {
+        User user = userRepo.findByUsername(username);
+
+        System.out.println("username: "+ user.getUsername() + ", " + user.getCoins()+ ", "+ user.getElo() +", " + user.getChangename());
+
+        if (user != null) {
+           User newUser= new User(user.getUsername(), user.getCoins(), user.getElo());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String userJson;
+
+            try {
+                userJson = objectMapper.writeValueAsString(newUser);
+            }
+            catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            System.out.println("username: "+ newUser.getUsername() + ", " + newUser.getCoins()+ ", "+ newUser.getElo() +", " + newUser.getChangename());
+                // Return the user data in JSON format
+            return new Response(HttpStatus.OK, ContentType.JSON, userJson + "\n");
+
+
+
+        }
+
+        return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User not found\n");
+    }
 }

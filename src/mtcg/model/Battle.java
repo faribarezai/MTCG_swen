@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Battle {
 
+    User user;
+    User user2;
+
+    public Battle() {}
+
     public static Battle conductBattle(User user1, User user2) {
         // Implement the battle logic as described in the prompt
         // ...

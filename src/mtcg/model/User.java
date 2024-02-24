@@ -42,7 +42,13 @@ public class User {
 
     }
 
-    public User() {
+    public User() {}
+
+    public User(String name, int coins, int elo){
+        this.username=name;
+        this.elo=elo;
+        this.coins=coins;
+
     }
 
     public void setCoins(int coins) {

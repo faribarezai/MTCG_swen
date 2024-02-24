@@ -2,6 +2,8 @@ package httpserver.utils;
 
 import httpserver.server.Service;
 import mtcg.controller.UserController;
+import mtcg.model.Battle;
+import mtcg.service.BattleService;
 import mtcg.service.CardService;
 import mtcg.service.PackageService;
 import mtcg.service.UserService;
@@ -18,19 +20,35 @@ public class Router {
 
 
     private void initializeRoute() {
-        Map<String, Service> routes = Map.of(
+        /*Map<String, Service> route = Map.of(
                 "/users", new UserService(),
                 "/sessions", new UserService(),
                 "/packages", new PackageService(),
-                "/transactions/packages", new PackageService(),
-                "/cards", new CardService(),
-                "/deck", new CardService(),
-                "/deck?format=plain", new CardService(),
-                "/users/{username}", new UserService(),
+                "/transactions/packages", new PackageService();
+                "/cards", new CardService();
+                "/deck", new CardService();
+                "/users/{username}", new UserService();
+                "/stats", new UserService(),
+                "/scoreboard", new UserService(),
+                "/battles", new Battle(),
                 "/trading", new CardService(),
                 "/tradings/{ttid}", new CardService()
+        );*/
+        Map<String, Service> routes = new HashMap<>();
+        routes.put("/users", new UserService());
+        routes.put("/sessions", new UserService());
+        routes.put("/packages", new PackageService());
+        routes.put("/transactions/packages", new PackageService());
+        routes.put("/cards", new CardService());
+        routes.put("/deck", new CardService());
+        routes.put("/deck?format=plain", new CardService());
+        routes.put("/users/{username}", new UserService());
+        routes.put("/stats", new UserService());
+        routes.put("/scoreboard", new UserService());
+        routes.put("/battles", new BattleService());
+        routes.put("/trading", new CardService());
+        routes.put("/tradings/{ttid}", new CardService());
 
-        );
 
         // Add routes and services to the serviceRegistry
         serviceRegistry.putAll(routes);
