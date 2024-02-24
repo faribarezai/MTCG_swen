@@ -1,6 +1,7 @@
 package mtcg.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -20,9 +21,12 @@ public class User {
     @Getter
     private int elo = 100;
     @Getter
+    @Setter
     private String bio;
+    @Setter
     @Getter
     private String image;
+    @Setter
     @Getter
     private String changename;
     @Getter

@@ -106,14 +106,23 @@ public class UserController {
             String requestBody = request.getBody();
 
             User updatedUser = objectMapper.readValue(requestBody, User.class);
+
+            System.out.println("updateduser bio: "+updatedUser.getUsername());
             System.out.println("updateduser bio: "+updatedUser.getBio());
             System.out.println("updateduser image: "+updatedUser.getImage());
             System.out.println("updateduser changename: "+updatedUser.getChangename());
+            System.out.println("user: "+user.getUsername());
+            System.out.println("user: "+user.getBio());
 
-                    System.out.println("username: "+ user.getUsername() + ", " + user.getBio()+ ", "+ user.getImage() +", " + user.getChangename());
-            userRepo.updateUser(user);
+            user.setBio(updatedUser.getBio());
+            user.setImage(updatedUser.getImage());
+            user.setChangename(updatedUser.getChangename());
 
-            return new Response(HttpStatus.OK, ContentType.JSON, "User Data updated! \n");
+            System.out.println("username: "+ user.getUsername() + ", " + user.getBio()+ ", "+ user.getImage() +", " + user.getChangename());
+
+            userRepo.updateUserData(user);
+
+            return new Response(HttpStatus.OK, ContentType.JSON, "User Data updated! \n" ); //+objectMapper.writeValueAsString(user) + " \n");
 
         } catch (Exception e) {
             // Handle the exception (e.g., invalid JSON format)

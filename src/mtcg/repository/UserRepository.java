@@ -106,9 +106,15 @@ public class UserRepository {
                     List<Card> deck = new ArrayList<>();
                     List<Card> stack = new ArrayList<>();
                     int coins = resultSet.getInt("coins");
+                    String bio= resultSet.getString("bio");
+                    String image= resultSet.getString("image");
+                    String changename= resultSet.getString("changename");
                     // Create and return a User object
                     User user = new User(username, password, deck, stack, coins, elo);
                     user.setUserId(userId); // Set the retrieved userId
+                    user.setBio(bio);
+                    user.setImage(image);
+                    user.setChangename(changename);
 
                     return user;
                 }
@@ -142,22 +148,23 @@ public class UserRepository {
 
 
     public void updateUserData(User user) {
-        String sql = "UPDATE mUser SET bio = ?, image = ?, changename = ? WHERE username = ?";
+            String sql = "UPDATE mUser SET bio = ?, image = ?, changename = ? WHERE username = ?";
+              System.out.println("before prepareStmt: " + user.getBio());
+            try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+                preparedStatement.setString(1, user.getBio());
+                preparedStatement.setString(2, user.getImage());
+                preparedStatement.setString(3, user.getChangename());
+                preparedStatement.setString(4, user.getUsername());
 
-        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-            preparedStatement.setString(1, user.getBio());
-            preparedStatement.setString(2, user.getImage());
-            preparedStatement.setString(3, user.getChangename());
-            preparedStatement.setString(4, user.getUsername());
+                System.out.println("in prepareStmt: " + user.getBio());
+                // Execute the update
+                preparedStatement.executeUpdate();
 
-            // Execute the update
-            preparedStatement.executeUpdate();
-
-         } catch (SQLException e) {
-            throw new DataAccessException("Error finding User by username", e);
-             }
-
-    }
+                System.out.println("after execute prepareStmt: " + user.getBio());
+            } catch (SQLException e) {
+                throw new DataAccessException("Error updating User data", e);
+            }
+        }
 
 
     private String serializeStack(List<Card> stack) throws JsonProcessingException {

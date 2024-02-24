@@ -42,19 +42,20 @@ public class UserService implements Service {
 
         //curl -i -X GET http://localhost:10001/users/kienboec --header "Authorization: Bearer kienboec-mtcgToken"
         if ("/users/kienboec".equals(route) && request.getMethod() == Method.GET ||
-                "/users/altenhof".equals(route) && request.getMethod() == Method.GET) {
+                "/users/altenhof".equals(route) && request.getMethod() == Method.GET ||
+                "/users/someGuy".equals(route) && request.getMethod() == Method.GET ) {
 
             String username= extractUsername(route);
             System.out.println("Username: " + username);
+
             //Authorization: Bearer kienboec-mtcgToken
             String expectedAuthFormat= "Authorization: Bearer " + username + "-mtcgToken";
 
-            // check if username is in authToken
-            //if(auth != null && auth.contains(username)){
-                if(auth!=null && auth.equals(expectedAuthFormat)){
+               // if(auth!=null && auth.equals(expectedAuthFormat)){
+            if(auth !=null && auth.contains(username)){
             return userController.getUserData(username);
-
             }
+
             return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Wrong Authentication Token! \n");
         }
 
@@ -64,7 +65,8 @@ public class UserService implements Service {
             System.out.println("Username: " + username);
 
             String expectedAuthFormat= "Authorization: Bearer " + username + "-mtcgToken";
-            if(auth!=null && auth.equals(expectedAuthFormat)) {
+            //if(auth!=null && auth.equals(expectedAuthFormat)) {
+              if(auth !=null && auth.contains(username)){
                 return userController.editUserData(username, request);
             }
 
