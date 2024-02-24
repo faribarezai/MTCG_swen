@@ -1,6 +1,7 @@
 package mtcg.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
@@ -98,21 +99,49 @@ public class UserController {
     }
 
     public Response editUserData(String username, Request request) {
+        User user = userRepo.findByUsername(username);
 
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = request.getBody();
+
+            User updatedUser = objectMapper.readValue(requestBody, User.class);
+            System.out.println("updateduser bio: "+updatedUser.getBio());
+            System.out.println("updateduser image: "+updatedUser.getImage());
+            System.out.println("updateduser changename: "+updatedUser.getChangename());
+
+                    System.out.println("username: "+ user.getUsername() + ", " + user.getBio()+ ", "+ user.getImage() +", " + user.getChangename());
+            userRepo.updateUser(user);
+
+            return new Response(HttpStatus.OK, ContentType.JSON, "User Data updated! \n");
+
+        } catch (Exception e) {
+            // Handle the exception (e.g., invalid JSON format)
+            e.printStackTrace();
+        }
 
         return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
     }
 
 
-    public Response getUserData(String username,Request request) {
+    public Response getUserData(String username) {
 
-        User user = new User();
-        user= userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(username);
 
-        System.out.println("Username: " + user.getUsername() + "coins: " + user.getCoins() +"Elo: " + user.getElo() +
-                "Bio: " + user.getBio());
+        if (user != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String userJson;
 
+            try {
+                userJson = objectMapper.writeValueAsString(user);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
 
-        return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Invalid request body \n");
+            return new Response(HttpStatus.OK, ContentType.JSON, userJson + "\n");
+        } else {
+            return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User not found\n");
+        }
     }
+
 }

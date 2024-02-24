@@ -141,6 +141,25 @@ public class UserRepository {
     }
 
 
+    public void updateUserData(User user) {
+        String sql = "UPDATE mUser SET bio = ?, image = ?, changename = ? WHERE username = ?";
+
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getBio());
+            preparedStatement.setString(2, user.getImage());
+            preparedStatement.setString(3, user.getChangename());
+            preparedStatement.setString(4, user.getUsername());
+
+            // Execute the update
+            preparedStatement.executeUpdate();
+
+         } catch (SQLException e) {
+            throw new DataAccessException("Error finding User by username", e);
+             }
+
+    }
+
+
     private String serializeStack(List<Card> stack) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(stack);

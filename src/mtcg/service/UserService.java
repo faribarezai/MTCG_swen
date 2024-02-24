@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserService implements Service {
@@ -28,7 +29,7 @@ public class UserService implements Service {
     @Override
     public Response handleRequest(Request request) {
         String route = request.getServiceRoute();
-        //String uEndpoint=  "/users/" +user.getUsername();
+        String auth= request.getAuthorizationHeader();
 
         if ("/users".equals(route) && request.getMethod() == Method.POST) {
             return userController.registerUser(request);
@@ -37,25 +38,40 @@ public class UserService implements Service {
         if ("/sessions".equals(route) && request.getMethod() == Method.POST) {
             return userController.loginUser(request);
         }
+
+
         //curl -i -X GET http://localhost:10001/users/kienboec --header "Authorization: Bearer kienboec-mtcgToken"
         if ("/users/kienboec".equals(route) && request.getMethod() == Method.GET ||
                 "/users/altenhof".equals(route) && request.getMethod() == Method.GET) {
+
             String username= extractUsername(route);
             System.out.println("Username: " + username);
-            return userController.getUserData(username, request);
+            //Authorization: Bearer kienboec-mtcgToken
+            String expectedAuthFormat= "Authorization: Bearer " + username + "-mtcgToken";
+
+            // check if username is in authToken
+            //if(auth != null && auth.contains(username)){
+                if(auth!=null && auth.equals(expectedAuthFormat)){
+            return userController.getUserData(username);
+
+            }
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Wrong Authentication Token! \n");
         }
 
         if("/users/kienboec".equals(route) && request.getMethod() == Method.PUT ||
                 "/users/altenhof".equals(route) && request.getMethod() == Method.PUT) {
             String username= extractUsername(route);
-
             System.out.println("Username: " + username);
 
-            return userController.editUserData(username, request);
+            String expectedAuthFormat= "Authorization: Bearer " + username + "-mtcgToken";
+            if(auth!=null && auth.equals(expectedAuthFormat)) {
+                return userController.editUserData(username, request);
+            }
+
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "Wrong Authentication Token! \n");
         }
 
-
-        // Handle other routes and methods as needed
+        // when all IFs fail
         return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful \n");
     }
 
