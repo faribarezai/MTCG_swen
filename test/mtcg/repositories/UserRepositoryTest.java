@@ -1,8 +1,5 @@
 package repositories;
-import mtcg.controller.UserController;
 import mtcg.dal.UnitOfWork;
-import mtcg.dal.DataAccessException;
-import mtcg.dal.DatabaseManager;
 
 import mtcg.model.Card;
 import mtcg.model.ElementType;
