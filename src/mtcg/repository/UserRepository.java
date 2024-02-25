@@ -152,18 +152,18 @@ public class UserRepository {
 
     public void updateUserData(User user) {
             String sql = "UPDATE mUser SET bio = ?, image = ?, changename = ? WHERE username = ?";
-              System.out.println("before prepareStmt: " + user.getBio());
+              //System.out.println("before prepareStmt: " + user.getBio());
             try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
                 preparedStatement.setString(1, user.getBio());
                 preparedStatement.setString(2, user.getImage());
                 preparedStatement.setString(3, user.getChangename());
                 preparedStatement.setString(4, user.getUsername());
 
-                System.out.println("in prepareStmt: " + user.getBio());
+              //  System.out.println("in prepareStmt: " + user.getBio());
                 // Execute the update
                 preparedStatement.executeUpdate();
 
-                System.out.println("after execute prepareStmt: " + user.getBio());
+               // System.out.println("after execute prepareStmt: " + user.getBio());
             } catch (SQLException e) {
                 throw new DataAccessException("Error updating User data", e);
             }
@@ -213,29 +213,6 @@ public class UserRepository {
         return userList;
     }
 
- /*   public void savetoStack(User user, int cardId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
-
-            String sql = "INSERT INTO mUser (username, stack) VALUES (?,?)";
-            System.out.println("before Saving to stack");
-
-            try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
-                Integer[] cardIdsArray = {cardId};
-                preparedStatement.setString(1, user.getUsername());
-                System.out.println("in prepstm Savetostack.");
-                preparedStatement.setArray(2, connection.createArrayOf("INTEGER", cardIdsArray));
-
-                preparedStatement.executeUpdate();
-                System.out.println("Cards saved successfully.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    */
-
-
     public void updateStack(User user, int cardId) throws SQLException {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
             String sql = "UPDATE mUser SET stack = array_append(stack, ?) WHERE username = ?";
@@ -253,6 +230,23 @@ public class UserRepository {
     }
 
 
+    public void updateDeck(User user, List<Card> sortedUserStack) throws SQLException {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
+            String sql = "UPDATE mUser SET deck=? WHERE username = ?";
+           // Array cardIdsArray = connection.createArrayOf("INTEGER", sortedUserStack.stream().map(Card::getCardId).toArray());
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                Array newDeckArray = connection.createArrayOf("INTEGER",sortedUserStack.stream().map(Card::getCardId).toArray());
+                preparedStatement.setArray(1, newDeckArray);
+                preparedStatement.setString(2, user.getUsername());
+
+                preparedStatement.executeUpdate();
+                System.out.println("Cards added to deck successfully.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

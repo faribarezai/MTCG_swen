@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    @Getter
     private int userId;
     @Getter
     private String username;

@@ -12,8 +12,10 @@ import mtcg.dal.UnitOfWork;
 import mtcg.model.Package;
 import mtcg.model.User;
 import mtcg.repository.CardRepository;
+import mtcg.repository.UserRepository;
 import mtcg.service.CardService;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class CardController {
     private CardRepository cardRepo = new CardRepository();
+    private UserRepository userRepo= new UserRepository();
 
     public CardController() {
     }
@@ -89,7 +92,11 @@ public class CardController {
         */
 
         // Perform deck process
-        bestDeck(user, userStack);
+        try {
+            bestDeck(user, userStack);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // print deck of user on console
         List<Card> userDeck = user.getDeck();
@@ -194,7 +201,7 @@ public class CardController {
     }
 
 
-public void bestDeck(User user, List<Card> userStack) {
+public void bestDeck(User user, List<Card> userStack) throws SQLException {
     List<Card> sortedUserStack = userStack.stream()
             .sorted(Comparator.comparingInt(Card::getDamage).reversed())
             .limit(4)
@@ -204,6 +211,7 @@ public void bestDeck(User user, List<Card> userStack) {
         System.out.println("Deck is EMPTY, so create it, need 4 best cards");
         // Put the selected cards into userDeck
         user.getDeck().addAll(sortedUserStack);
+        userRepo.updateDeck(user, sortedUserStack);
     }
     System.out.println("Deck specified! ");
 }
@@ -219,7 +227,11 @@ public void bestDeck(User user, List<Card> userStack) {
         }
 
         // Perform deck process
-        bestDeck(user, userStack);
+        try {
+            bestDeck(user, userStack);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         List<Card> userDeck= user.getDeck();
 
         // Convert the list of cards to plain text
