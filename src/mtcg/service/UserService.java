@@ -86,6 +86,19 @@ public class UserService implements Service {
         }
 
 
+        //curl -X GET http://localhost:10001/scoreboard --header "Authorization: Bearer kienboec-mtcgToken"
+        if("/scoreboard".equals(route) && request.getMethod() == Method.GET){
+            if(Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken")) {
+                String username= extractUsernameFromAuthorizationHeader(auth);
+                return userController.getScores(username);
+
+            }
+
+            return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "mismatch Authentication Token! \n");
+
+        }
+
+
 
         // when all IFs fail
         return new Response(HttpStatus.OK, ContentType.JSON, "handle User process successful \n");

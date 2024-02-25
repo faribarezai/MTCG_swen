@@ -171,4 +171,41 @@ public class UserRepository {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(stack);
     }
+
+    public List<User> getAllUser() {
+        String sql = "SELECT * FROM mUser";
+        List<User> userList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                String username=resultSet.getString("username");
+                String password = resultSet.getString("password");
+                int elo = resultSet.getInt("elo");
+                List<Card> deck = new ArrayList<>();
+                List<Card> stack = new ArrayList<>();
+                int coins = resultSet.getInt("coins");
+                String bio= resultSet.getString("bio");
+                String image= resultSet.getString("image");
+                String changename= resultSet.getString("changename");
+                // Create and return a User object
+
+                User user = new User(username, password, deck, stack, coins, elo);
+                user.setUserId(userId); // Set the retrieved userId
+                user.setBio(bio);
+                user.setImage(image);
+                user.setChangename(changename);
+
+
+                userList.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception
+        }
+
+        return userList;
+    }
+
 }

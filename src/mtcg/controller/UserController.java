@@ -12,6 +12,11 @@ import mtcg.model.User;
 import mtcg.repository.UserRepository;
 import mtcg.service.UserService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class UserController {
     private UserService userService;
     private UserRepository userRepo = new UserRepository();
@@ -179,6 +184,32 @@ public class UserController {
 
         return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User not found\n");
     }
+
+    public Response getScores(String username) {
+        List<String> scores = new ArrayList<>();
+
+        // Assuming users is a List<User> obtained from somewhere
+        List<User> users = userRepo.getAllUser();
+
+        // Sort the users based on their elo values in ascending order
+        Collections.sort(users, Comparator.comparingInt(User::getElo));
+
+        for (User user : users) {
+            String temp = "{" +
+                    "\"userId\": " + user.getId() +
+                    ", \"name\": \"" + user.getUsername() +
+                    "\", \"elo\": " + user.getElo() +
+                    "}";
+            scores.add(temp);
+        }
+        // Join the scores with line breaks
+        String joinedScores = String.join(",\n", scores);
+
+        return new Response(HttpStatus.OK, ContentType.JSON,
+                " description: The scoreboard could be retrieved successfully \n " +
+                        "data: { \n" + joinedScores + " \n}");
+    }
+
 }
 
 
