@@ -1,17 +1,78 @@
 import httpserver.server.Server;
 import mtcg.dal.DatabaseManager;
+<<<<<<< HEAD
 import mtcg.service.PlayerService;
+=======
+import mtcg.model.Card;
+import mtcg.model.User;
+import mtcg.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Lets play.... Monster Trading Card Game!");
+<<<<<<< HEAD
 /*
         Scanner scanner = new Scanner(System.in);
+=======
 
-        System.out.println("Please enter your Name: ");
-        String inputName = scanner.next();
+        try {
+            // start server
+            Server server = new Server();
+            server.start();
 
+            UserService userService = new UserService();
+           /*
+            List<Card> stack= new ArrayList<>();
+            List<Card> deck= new ArrayList<>();
+            User kienboec = new User("kienboec", "daniel", deck, stack,20);
+
+             // create users
+            UserService userService = new UserService();
+            boolean exists =userService.userExists(kienboec);
+            System.out.println(exists);
+           if(!exists){
+               userService.saveUser(kienboec);
+               System.out.println(kienboec.getUsername() + " was successfully added to db!!");
+           }
+           System.out.println(kienboec.getUsername() + " already exists!!,");
+            System.out.println(kienboec.getUsername() + " was logged in successfully!!,");
+           // -------------------------------------------------------------------------------------
+
+            User kkien = new User("kienboec", "password", deck, stack,20);
+
+            boolean exist =userService.userExists(kkien);
+            System.out.println(exist);
+            if(!exist) {
+                userService.saveUser(kkien);
+                System.out.println(kkien.getUsername() + " was successfully added to db!!");
+            }
+            System.out.println(kkien.getUsername() + " was logged in successfully!!,");
+*/
+
+
+
+            // UserService myuserService = new UserService(DatabaseManager.INSTANCE.getConnection());
+            //CardService = new CardService(/* pass dependencies if needed */);
+            // ... other components
+
+            // Your application is now running
+
+        } catch (Exception e) {
+            // Handle initialization failures
+            e.printStackTrace();
+        }
+    }
+}
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
+
+
+<<<<<<< HEAD
         System.out.println("Please enter your Password: ");
         String inputPassword = scanner.next();
 */
@@ -37,6 +98,7 @@ public class Main {
 }
 
 
+=======
 
 /*
     public static void main(String[] args) {
@@ -57,8 +119,32 @@ public class Main {
         }
     }
 */
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
+
+/*
+    public static void main(String[] args) {
+        // Initialize the router
+        Router router = new Router();
+
+        // Initialize the server
+        Server server = new Server(8080, router);
+
+<<<<<<< HEAD
+        // You can add more services/routes dynamically if needed
+        // router.addService("/newRoute", new SomeService());
+
+        try {
+            // Start the server
+            server.start();
+        } catch (IOException e) {
+            System.err.println("Error starting the server: " + e.getMessage());
+        }
+    }
+*/
 
 
+=======
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 
 

@@ -1,9 +1,16 @@
 package httpserver.utils;
 
 import httpserver.server.Service;
+<<<<<<< HEAD
 import mtcg.service.CardService;
 import mtcg.service.PackageService;
 import mtcg.service.PlayerService;
+=======
+import mtcg.controller.UserController;
+import mtcg.service.CardService;
+import mtcg.service.PackageService;
+import mtcg.service.UserService;
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +26,15 @@ public class Router {
 
     private void initializeRoute() {
         //User Service
+<<<<<<< HEAD
         serviceRegistry.put("/users", new PlayerService()); // controller oder service?
         serviceRegistry.put("/sessions", new PlayerService());
         serviceRegistry.put("/users/{username}", new PlayerService());
+=======
+        serviceRegistry.put("/users", new UserService()); // controller oder service?
+        serviceRegistry.put("/sessions", new UserService());
+        serviceRegistry.put("/users/{username}", new UserService());
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
         //CardService
         serviceRegistry.put("/cards", new CardService());

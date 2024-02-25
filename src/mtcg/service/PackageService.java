@@ -6,7 +6,11 @@ import httpserver.server.Request;
 import httpserver.server.Response;
 import httpserver.server.Service;
 import mtcg.model.Card;
+<<<<<<< HEAD
 import mtcg.model.Player;
+=======
+import mtcg.model.User;
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 import java.util.Collections;
 import java.util.List;
@@ -15,14 +19,24 @@ public class PackageService implements Service {
     private static final int CARDS_PER_PACKAGE = 5;
     private static final int COINS_PER_PACKAGE = 5;
 
+<<<<<<< HEAD
     public static Response buyPackage(Player player) {
         // Check if the user has enough coins to buy a package
         if (player.getCoins() < COINS_PER_PACKAGE) {
+=======
+    public static Response buyPackage(User user) {
+        // Check if the user has enough coins to buy a package
+        if (user.getCoins() < COINS_PER_PACKAGE) {
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
             return new Response(HttpStatus.BAD_REQUEST, ContentType.PLAIN_TEXT, "Not enough coins to buy a package");
         }
 
         // Deduct coins from the user's account
+<<<<<<< HEAD
         player.deductCoins(COINS_PER_PACKAGE);
+=======
+        user.deductCoins(COINS_PER_PACKAGE);
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
         // Generate and return a package with 5 cards
         List<Card> cards = generateCards();
@@ -59,7 +73,10 @@ public class PackageService implements Service {
     private static List<Card> retrieveCardsFromDatabase() {
         // Implement the logic to retrieve cards from the database based on their IDs
         // Example: return cardRepository.findByIdIn(cardIds);
+<<<<<<< HEAD
         // This is a placeholder; you need to implement the actual logic.
+=======
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
         return Collections.emptyList();
     }
 

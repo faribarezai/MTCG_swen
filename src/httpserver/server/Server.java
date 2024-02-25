@@ -20,7 +20,11 @@ public class Server {
     }
 
     public Server(){
+<<<<<<< HEAD
         this(5000, new Router());
+=======
+        this(10001, new Router());
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
     }
 
     public void start() throws IOException {

@@ -17,7 +17,11 @@ echo.
 curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"admin\",    \"Password\":\"istrator\"}"
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 echo should fail:
 curl -i -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\"}"
@@ -26,7 +30,10 @@ curl -i -X POST http://localhost:10001/users --header "Content-Type: application
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 2) Login Users
@@ -37,14 +44,22 @@ echo.
 curl -i -X POST http://localhost:10001/sessions --header "Content-Type: application/json" -d "{\"Username\":\"admin\",    \"Password\":\"istrator\"}"
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 echo should fail:
 curl -i -X POST http://localhost:10001/sessions --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"different\"}"
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 3) create packages (done by "admin")
@@ -62,7 +77,11 @@ curl -i -X POST http://localhost:10001/packages --header "Content-Type: applicat
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 4) acquire packages kienboec
@@ -79,7 +98,11 @@ curl -i -X POST http://localhost:10001/transactions/packages --header "Content-T
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 5) acquire packages altenhof
@@ -92,7 +115,11 @@ curl -i -X POST http://localhost:10001/transactions/packages --header "Content-T
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 6) add new packages
@@ -104,7 +131,11 @@ curl -i -X POST http://localhost:10001/packages --header "Content-Type: applicat
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 7) acquire newly created packages altenhof
@@ -117,7 +148,11 @@ curl -i -X POST http://localhost:10001/transactions/packages --header "Content-T
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 8) show all acquired cards kienboec
@@ -127,7 +162,11 @@ curl -i -X GET http://localhost:10001/cards
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 9) show all acquired cards altenhof
@@ -145,7 +184,11 @@ curl -i -X GET http://localhost:10001/deck --header "Authorization: Bearer alten
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 11) configure deck
@@ -159,7 +202,10 @@ curl -i -X GET http://localhost:10001/deck --header "Authorization: Bearer alten
 echo.
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 echo should fail and show original from before:
 curl -i -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d "[\"845f0dc7-37d0-426e-994e-43fc3ac83c08\", \"99f8f8dc-e25e-4a95-aa2c-782823f36e2a\", \"e85e3976-7c86-4d06-9a80-641c2019a79f\", \"171f6076-4eb5-4a7d-b3f2-2d650cc3d237\"]"
@@ -171,7 +217,11 @@ echo should fail ... only 3 cards set
 curl -i -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer altenhof-mtcgToken" -d "[\"aa9999a0-734c-49c6-8f4a-651864b14e62\", \"d6e9c720-9b5a-40c7-a6b2-bc34752e3463\", \"d60e23cf-2238-4d49-844f-c7589ee5342e\"]"
 echo.
 
+<<<<<<< HEAD
 pause
+=======
+
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
 REM --------------------------------------------------
 echo 12) show configured deck

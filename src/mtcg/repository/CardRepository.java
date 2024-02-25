@@ -17,7 +17,11 @@ public class CardRepository {
     }
 
     public void updateCard(Card card) {
+<<<<<<< HEAD
         String sql = "UPDATE cards SET name = ?, damage = ?, element_type = ?, card_type = ? WHERE id = ?";
+=======
+        String sql = "UPDATE card SET name = ?, damage = ?, element = ?, cardType = ? WHERE cardId = ?";
+>>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
 
         try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
             preparedStatement.setString(1, card.getName());
