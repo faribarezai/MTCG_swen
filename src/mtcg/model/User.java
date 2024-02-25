@@ -63,10 +63,6 @@ public class User {
         this.coins = coins;
     }
 
-    public int getElo() {
-        return elo;
-    }
-
     public int getId() {
         return userId;
     }

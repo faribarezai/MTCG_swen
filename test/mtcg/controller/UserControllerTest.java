@@ -38,7 +38,7 @@ public class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        org.mockito.MockitoAnnotations.initMocks(this);
         userController = new UserController(userRepository);
     }
 
