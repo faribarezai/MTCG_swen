@@ -134,6 +134,7 @@ public class PackageController {
                 // add it to stack of user
                 if (cardIds.contains(card.getCardId())) {
                     updateUserID(card, username.getId());
+                    userRepository.updateStack(username, card.getCardId());
                     username.addCardToStack(card);
                 }
             }

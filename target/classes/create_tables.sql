@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS mUser (
     password VARCHAR(255) NOT NULL,
     coins INT DEFAULT 20,
     elo INT DEFAULT 100,
+    deck INTEGER[],
+    stack INTEGER[],
     bio VARCHAR(255),
     image VARCHAR(255),
     changeName VARCHAR(255),

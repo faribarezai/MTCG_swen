@@ -3,6 +3,7 @@ package mtcg.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -12,9 +13,9 @@ public class User {
     @Getter
     private String password;
     @Getter
-    private List<Card> deck;
+    private List<Card> deck= new ArrayList<>();
     @Getter
-    private List<Card> stack;
+    private List<Card> stack= new ArrayList<>();
     ///////Getter Methods-------------------------------------------
     @Getter
     private int coins = 20;

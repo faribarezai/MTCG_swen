@@ -3,6 +3,7 @@ package mtcg.repository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mtcg.model.Card;
+import mtcg.model.CardType;
 import mtcg.model.User;
 import mtcg.dal.DataAccessException;
 import mtcg.dal.UnitOfWork;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class UserRepository {
 
-    private UnitOfWork unitOfWork= new UnitOfWork();
+    private UnitOfWork unitOfWork = new UnitOfWork();
 
     public UserRepository(UnitOfWork unitOfWork) {
 
@@ -211,5 +212,47 @@ public class UserRepository {
 
         return userList;
     }
+
+ /*   public void savetoStack(User user, int cardId) throws SQLException {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
+
+            String sql = "INSERT INTO mUser (username, stack) VALUES (?,?)";
+            System.out.println("before Saving to stack");
+
+            try (PreparedStatement preparedStatement = unitOfWork.prepareStatement(sql)) {
+                Integer[] cardIdsArray = {cardId};
+                preparedStatement.setString(1, user.getUsername());
+                System.out.println("in prepstm Savetostack.");
+                preparedStatement.setArray(2, connection.createArrayOf("INTEGER", cardIdsArray));
+
+                preparedStatement.executeUpdate();
+                System.out.println("Cards saved successfully.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    */
+
+
+    public void updateStack(User user, int cardId) throws SQLException {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "password")) {
+            String sql = "UPDATE mUser SET stack = array_append(stack, ?) WHERE username = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, cardId);
+                preparedStatement.setString(2, user.getUsername());
+
+                preparedStatement.executeUpdate();
+                System.out.println("Card added to stack successfully.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
 
 }
