@@ -7,6 +7,7 @@ import httpserver.http.ContentType;
 import httpserver.http.HttpStatus;
 import httpserver.server.Request;
 import httpserver.server.Response;
+import lombok.Getter;
 import mtcg.model.User;
 import mtcg.repository.UserRepository;
 import mtcg.service.UserService;
@@ -154,20 +155,21 @@ public class UserController {
         System.out.println("username: "+ user.getUsername() + ", " + user.getCoins()+ ", "+ user.getElo() +", " + user.getChangename());
 
         if (user != null) {
-           User newUser= new User(user.getUsername(), user.getCoins(), user.getElo());
+          // User newUser= new User(user.getUsername(), user.getCoins(), user.getElo());
+            UserStats userStats = new UserStats(user.getUsername(), user.getCoins(), user.getElo());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String userJson;
 
             try {
-                userJson = objectMapper.writeValueAsString(newUser);
+                userJson = objectMapper.writeValueAsString(userStats);
             }
             catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
 
 
-            System.out.println("username: "+ newUser.getUsername() + ", " + newUser.getCoins()+ ", "+ newUser.getElo() +", " + newUser.getChangename());
+            System.out.println("username: "+ userStats.getUsername() + ", " + userStats.getCoins()+ ", "+ userStats.getElo());
                 // Return the user data in JSON format
             return new Response(HttpStatus.OK, ContentType.JSON, userJson + "\n");
 
@@ -177,4 +179,22 @@ public class UserController {
 
         return new Response(HttpStatus.NOT_FOUND, ContentType.JSON, "User not found\n");
     }
+}
+
+
+class UserStats {
+    @Getter
+    private String username;
+    @Getter
+    private int coins;
+    @Getter
+    private int elo;
+
+    public UserStats(String username, int coins, int elo) {
+        this.username = username;
+        this.coins = coins;
+        this.elo = elo;
+    }
+
+    // Getter methods for username, coins, and elo
 }

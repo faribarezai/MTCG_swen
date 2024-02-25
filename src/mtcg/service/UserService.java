@@ -45,7 +45,7 @@ public class UserService implements Service {
                 "/users/altenhof".equals(route) && request.getMethod() == Method.GET ||
                 "/users/someGuy".equals(route) && request.getMethod() == Method.GET ) {
 
-            String username= extractUsername(route);
+            String username= extractUsernameFromRoute(route);
             System.out.println("Username: " + username);
 
             //Authorization: Bearer kienboec-mtcgToken
@@ -61,7 +61,7 @@ public class UserService implements Service {
 
         if("/users/kienboec".equals(route) && request.getMethod() == Method.PUT ||
                 "/users/altenhof".equals(route) && request.getMethod() == Method.PUT) {
-            String username= extractUsername(route);
+            String username= extractUsernameFromRoute(route);
 
             //if(auth!=null && auth.equals(expectedAuthFormat)) {
               if(auth !=null && auth.contains(username)){
@@ -73,8 +73,9 @@ public class UserService implements Service {
 
         //curl -X GET http://localhost:10001/stats --header "Authorization: Bearer kienboec-mtcgToken"
         if("/stats".equals(route) && request.getMethod() == Method.GET){
-            if(Objects.equals(auth, "Authorization: Bearer admin-mtcgToken")) {
-                String username= extractUsername(auth);
+            if(Objects.equals(auth, "Authorization: Bearer kienboec-mtcgToken") ||
+                    Objects.equals(auth, "Authorization: Bearer altenhof-mtcgToken")) {
+                String username= extractUsernameFromAuthorizationHeader(auth);
 
                 System.out.println("Stats of: " + username);
                 return userController.getUserStats(username);
@@ -92,7 +93,7 @@ public class UserService implements Service {
 
 
 
-    public String extractUsername(String route) {
+    public String extractUsernameFromRoute(String route) {
         // Assuming route is in the format "/users/{username}"
         String[] parts = route.split("/");
 
@@ -103,6 +104,21 @@ public class UserService implements Service {
             // Handle the case where the route format is not as expected
             throw new IllegalArgumentException("Invalid route format");
         }
+    }
+
+    private String extractUsernameFromAuthorizationHeader(String authHeader) {
+        // Assuming the format is "Authorization: Bearer username-mtcgToken"
+        String[] parts = authHeader.split("\\s+");
+
+        if (parts.length == 3 && parts[0].equals("Authorization:") && parts[1].startsWith("Bearer")) {
+            String token = parts[2].trim();
+
+            int dashIndex = token.indexOf('-');
+            if (dashIndex != -1) {
+                return token.substring(0, dashIndex);
+            }
+        }
+        return null;
     }
 
 }
