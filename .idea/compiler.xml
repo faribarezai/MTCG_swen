@@ -3,25 +3,6 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-<<<<<<< HEAD
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MTCG_swen" target="20" />
-    </bytecodeTargetLevel>
-=======
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="MTCG_swen" />
-      </profile>
-    </annotationProcessing>
-    <bytecodeTargetLevel target="21" />
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MTCG_swen" options="--add-exports java.base/jdk.internal.classfile.impl=ALL-UNNAMED" />
-    </option>
->>>>>>> c5eb8b5631d66a05baccdca2c975cc2c8944356c
   </component>
 </project>
