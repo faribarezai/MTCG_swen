@@ -95,9 +95,7 @@ public class UserService implements Service {
             }
 
             return new Response(HttpStatus.BAD_REQUEST, ContentType.JSON, "mismatch Authentication Token! \n");
-
         }
-
 
 
         // when all IFs fail

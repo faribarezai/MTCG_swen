@@ -5,10 +5,13 @@ import java.util.List;
 
 public class Battle {
 
-    User user;
-    User user2;
+    private int battleId;
+    private  String userName;
 
     public Battle() {}
+    public Battle(String name) {
+        this.userName=name;
+    }
 
     public static Battle conductBattle(User user1, User user2) {
         // Implement the battle logic as described in the prompt

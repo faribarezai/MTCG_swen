@@ -109,8 +109,10 @@ public class UserRepository {
                     String bio= resultSet.getString("bio");
                     String image= resultSet.getString("image");
                     String changename= resultSet.getString("changename");
+                    int wins = resultSet.getInt("wins");
+                    int losses = resultSet.getInt("losses");
                     // Create and return a User object
-                    User user = new User(username, password, deck, stack, coins, elo);
+                    User user = new User(username, password, deck, stack, coins, elo, wins, losses);
                     user.setUserId(userId); // Set the retrieved userId
                     user.setBio(bio);
                     user.setImage(image);
@@ -189,9 +191,11 @@ public class UserRepository {
                 String bio= resultSet.getString("bio");
                 String image= resultSet.getString("image");
                 String changename= resultSet.getString("changename");
+                int wins = resultSet.getInt("wins");
+                int losses = resultSet.getInt("losses");
                 // Create and return a User object
 
-                User user = new User(username, password, deck, stack, coins, elo);
+                User user = new User(username, password, deck, stack, coins, elo, wins, losses);
                 user.setUserId(userId); // Set the retrieved userId
                 user.setBio(bio);
                 user.setImage(image);

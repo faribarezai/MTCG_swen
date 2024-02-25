@@ -29,16 +29,22 @@ public class User {
     @Setter
     @Getter
     private String changename;
+    @Setter
     @Getter
-    List<Integer> scoreboard;// shall be in battlelogic
+    int wins;
+    @Setter
+    @Getter
+    int losses;
 
-    public User(String username, String password, List<Card> deck, List<Card> stack, int coins, int elo) {
+    public User(String username, String password, List<Card> deck, List<Card> stack, int coins, int elo, int wins, int losses) {
         this.username = username;
         this.password = password;
         this.deck = deck;
         this.coins = coins;
         this.stack = stack;
         this.elo = elo;
+        this.wins=wins;
+        this.losses=losses;
 
     }
 

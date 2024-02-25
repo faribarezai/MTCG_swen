@@ -24,7 +24,9 @@ CREATE TABLE IF NOT EXISTS mUser (
     elo INT DEFAULT 100,
     bio VARCHAR(255),
     image VARCHAR(255),
-    changeName VARCHAR(255)
+    changeName VARCHAR(255),
+    wins INT DEFAULT 0,
+    losses INT DEFAULT 0
     );
 
 ALTER TABLE mUser
@@ -56,10 +58,8 @@ ALTER TABLE package
 -- Battle Table
 CREATE TABLE IF NOT EXISTS battle (
     battleId SERIAL PRIMARY KEY,
-    winner_id INT,
-    loser_id INT,
-    FOREIGN KEY (winner_id) REFERENCES mUser (userId),
-    FOREIGN KEY (loser_id) REFERENCES mUser (userId)
+    userName VARCHAR(255),
+    FOREIGN KEY (userName) REFERENCES mUser (username)
     );
 
 ALTER TABLE battle
